@@ -104,7 +104,7 @@ Partial Class frmArchive
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(231, 276)
+        Me.Label3.Location = New System.Drawing.Point(243, 276)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(21, 13)
         Me.Label3.TabIndex = 8
@@ -125,7 +125,7 @@ Partial Class frmArchive
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(74, 27)
         Me.Button3.TabIndex = 10
-        Me.Button3.Text = "Начать!"
+        Me.Button3.Text = "Начать"
         Me.Button3.UseVisualStyleBackColor = True
         '
         'Button4
@@ -134,7 +134,7 @@ Partial Class frmArchive
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(74, 27)
         Me.Button4.TabIndex = 11
-        Me.Button4.Text = "Отменить!"
+        Me.Button4.Text = "Отменить"
         Me.Button4.UseVisualStyleBackColor = True
         '
         'frmArchive
@@ -155,6 +155,7 @@ Partial Class frmArchive
         Me.Controls.Add(Me.TextBox2)
         Me.Controls.Add(Me.TextBox1)
         Me.Name = "frmArchive"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Form2"
         Me.ResumeLayout(False)
         Me.PerformLayout()
