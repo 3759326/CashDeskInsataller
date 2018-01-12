@@ -1,6 +1,7 @@
 ﻿Imports System.ServiceProcess
 
 
+
 Module Tools
     Public logstatus
     Function SrvControl(srvName As String, srvAction As String) As String
@@ -14,12 +15,20 @@ Module Tools
                         logstatus = "Внимание"
                         Exit Function
                     End If
+trypoint1:
                     sc.Stop()
+                    Threading.Thread.Sleep(500)
                     sc.Refresh()
-                    SrvControl = "Остановка службы" & srvName
-                    logstatus = "Успех"
+                    If sc.Status = 1 Then
+                        SrvControl = "Остановка службы" & srvName
+                        logstatus = "Успех"
+                    Else
+                        GoTo trypoint1
+
+                    End If
+
                 Catch ex As Exception
-                    MsgBox(ex.Message)
+                    frmArchive.Logining(ex.Message, "Внимание")
                 End Try
 
 
@@ -30,12 +39,20 @@ Module Tools
                         logstatus = "Внимание"
                         Exit Function
                     End If
+trypoint2:
                     sc.Start()
+                    Threading.Thread.Sleep(500)
                     sc.Refresh()
-                    SrvControl = "Запуск службы" & srvName
-                    logstatus = "Успех"
+                    If sc.Status = 4 Then
+                        SrvControl = "Запуск службы" & srvName
+                        logstatus = "Успех"
+                    Else
+                        GoTo trypoint2
+                    End If
+
                 Catch ex As Exception
-                    MsgBox(ex.Message)
+                    'MsgBox(ex.Message)
+                    frmArchive.Logining (ex.Message, "Внимание")
                 End Try
             Case "Status"
                 'SrvService = sc.Status
@@ -55,24 +72,44 @@ Module Tools
 
         Try
             p = Process.GetProcessesByName(procName)
-            If p.Length > 0 Then
+
+            If ProcesStatus(procName) = True Then
                 ' Валим процесс 
-                'MsgBox(p.Length)
+trypoint1:
                 For i = 0 To p.Length - 1
                     Process.GetProcessesByName(procName)(0).Kill()
+                    Threading.Thread.Sleep(500)
                     ' Пробуем еще раз на случай если он не один 
 
                 Next
-                KillProc(procName)
+                If ProcesStatus(procName) = False Then
+                    KillProc = "Остановка процесса " & procName
+                    logstatus = "Успех"
+                Else
+                    GoTo trypoint1
+                End If
+
             Else
-                logstatus = "Успех"
+                KillProc = "Процесс " & procName & " не найден"
+                logstatus = "Внимание"
                 Exit Function
 
             End If
 
         Catch ex As Exception
-            'Logining(ex.Message, "Внимание")
+            frmArchive.Logining(ex.Message, "Внимание")
         End Try
 
     End Function
+    Function ProcesStatus(procName As String) As Boolean
+        Dim p() As Process
+        p = Process.GetProcessesByName(procName)
+        If p.Length > 0 Then
+            ProcesStatus = True
+        Else
+            ProcesStatus = False
+        End If
+    End Function
+
+
 End Module

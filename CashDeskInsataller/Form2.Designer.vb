@@ -39,6 +39,7 @@ Partial Class frmArchive
         Me.ListView1 = New System.Windows.Forms.ListView()
         Me.Test = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.Test2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.SuspendLayout()
         '
         'txtSources
@@ -201,4 +202,5 @@ Partial Class frmArchive
     Friend WithEvents ListView1 As ListView
     Friend WithEvents Test As ColumnHeader
     Friend WithEvents Test2 As ColumnHeader
+    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
 End Class
