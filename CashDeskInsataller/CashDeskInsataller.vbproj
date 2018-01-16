@@ -87,6 +87,12 @@
     <Compile Include="Form2.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmInstall.Designer.vb">
+      <DependentUpon>frmInstall.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmInstall.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Full_INI_Class.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -111,6 +117,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form2.resx">
       <DependentUpon>Form2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmInstall.resx">
+      <DependentUpon>frmInstall.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

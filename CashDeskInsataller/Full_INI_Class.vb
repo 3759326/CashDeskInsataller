@@ -218,6 +218,9 @@ WrongLineFound_SKIP:
             If MainINI.ContainsKey(SectionKey) Then
                 If MainINI.Item(SectionKey).ContainsKey(ParameterKey) Then
                     Try
+                        If Left(MainINI.Item(SectionKey).Item(ParameterKey).ToString, 1) = ";" Then
+                            Return [Default]
+                        End If
                         Return MainINI.Item(SectionKey).Item(ParameterKey).ToString
                     Catch
                         Return [Default]

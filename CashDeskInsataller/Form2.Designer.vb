@@ -37,9 +37,10 @@ Partial Class frmArchive
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.ListView1 = New System.Windows.Forms.ListView()
-        Me.Test = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.Test2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.Events = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.Status = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'txtSources
@@ -94,7 +95,7 @@ Partial Class frmArchive
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(25, 251)
+        Me.ProgressBar1.Location = New System.Drawing.Point(25, 268)
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(481, 22)
         Me.ProgressBar1.TabIndex = 7
@@ -102,7 +103,7 @@ Partial Class frmArchive
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(243, 276)
+        Me.Label3.Location = New System.Drawing.Point(243, 293)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(21, 13)
         Me.Label3.TabIndex = 8
@@ -141,7 +142,7 @@ Partial Class frmArchive
         '
         'ListView1
         '
-        Me.ListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.Test, Me.Test2})
+        Me.ListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.Events, Me.Status})
         Me.ListView1.FullRowSelect = True
         Me.ListView1.Location = New System.Drawing.Point(25, 146)
         Me.ListView1.Name = "ListView1"
@@ -150,21 +151,35 @@ Partial Class frmArchive
         Me.ListView1.UseCompatibleStateImageBehavior = False
         Me.ListView1.View = System.Windows.Forms.View.Details
         '
-        'Test
+        'Events
         '
-        Me.Test.Text = "Событие"
-        Me.Test.Width = 318
+        Me.Events.Text = "Событие"
+        Me.Events.Width = 318
         '
-        'Test2
+        'Status
         '
-        Me.Test2.Text = "Статус"
-        Me.Test2.Width = 152
+        Me.Status.Text = "Статус"
+        Me.Status.Width = 152
+        '
+        'BackgroundWorker1
+        '
+        Me.BackgroundWorker1.WorkerReportsProgress = True
+        Me.BackgroundWorker1.WorkerSupportsCancellation = True
+        '
+        'Label5
+        '
+        Me.Label5.Location = New System.Drawing.Point(27, 249)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(479, 17)
+        Me.Label5.TabIndex = 13
+        Me.Label5.Text = "Архивирование"
         '
         'frmArchive
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(521, 341)
+        Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.ListView1)
         Me.Controls.Add(Me.Button4)
         Me.Controls.Add(Me.Button3)
@@ -177,9 +192,12 @@ Partial Class frmArchive
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.txtDest)
         Me.Controls.Add(Me.txtSources)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.MaximizeBox = False
         Me.Name = "frmArchive"
+        Me.RightToLeftLayout = True
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Form2"
+        Me.Text = "Создание мастер-образа"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -200,7 +218,8 @@ Partial Class frmArchive
     Friend WithEvents SaveFileDialog1 As SaveFileDialog
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents ListView1 As ListView
-    Friend WithEvents Test As ColumnHeader
-    Friend WithEvents Test2 As ColumnHeader
+    Friend WithEvents Events As ColumnHeader
+    Friend WithEvents Status As ColumnHeader
     Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
+    Friend WithEvents Label5 As Label
 End Class

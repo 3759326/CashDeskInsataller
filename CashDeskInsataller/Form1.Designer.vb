@@ -37,7 +37,7 @@ Partial Class frmStart
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(210, 55)
         Me.Button1.TabIndex = 0
-        Me.Button1.Text = "Создать мастер-образа кассы"
+        Me.Button1.Text = "Создать мастер-образ кассы"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'Button2
@@ -89,7 +89,10 @@ Partial Class frmStart
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.Button1)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.MaximizeBox = False
         Me.Name = "frmStart"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "CashDesc Installer"
         Me.GroupBox1.ResumeLayout(False)
         Me.ResumeLayout(False)

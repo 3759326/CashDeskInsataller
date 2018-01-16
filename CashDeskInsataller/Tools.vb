@@ -8,14 +8,17 @@ Module Tools
 
         Dim sc As New ServiceController(srvName)
         Select Case srvAction
+
             Case "Stop"
                 Try
+
                     If sc.Status = 1 Then
                         SrvControl = "Служба " & srvName & " уже остановленна"
                         logstatus = "Внимание"
                         Exit Function
                     End If
 trypoint1:
+
                     sc.Stop()
                     Threading.Thread.Sleep(500)
                     sc.Refresh()
@@ -28,18 +31,21 @@ trypoint1:
                     End If
 
                 Catch ex As Exception
-                    frmArchive.Logining(ex.Message, "Внимание")
+                    frmArchive.err = srvName
+                    frmArchive.Logining(eventName:=ex.Message, eventStatus:="Внимание")
                 End Try
 
 
             Case "Start"
                 Try
+                    ' Threading.Thread.Sleep(300)
                     If sc.Status = 4 Then
                         SrvControl = "Служба " & srvName & " уже запущенна"
                         logstatus = "Внимание"
                         Exit Function
                     End If
 trypoint2:
+
                     sc.Start()
                     Threading.Thread.Sleep(500)
                     sc.Refresh()
@@ -51,8 +57,9 @@ trypoint2:
                     End If
 
                 Catch ex As Exception
+
                     'MsgBox(ex.Message)
-                    frmArchive.Logining (ex.Message, "Внимание")
+                    frmArchive.Logining(ex.Message, "Внимание")
                 End Try
             Case "Status"
                 'SrvService = sc.Status
@@ -110,6 +117,16 @@ trypoint1:
             ProcesStatus = False
         End If
     End Function
+    Function StartProcess(procName As String, argument As String)
+        Dim pInfo As New ProcessStartInfo()
 
+        pInfo.FileName = procName
+        pInfo.Arguments = argument
+        Dim p As Process = Process.Start(pInfo)
+        'p.Start(procName, argument)
+        p.WaitForExit()
+
+
+    End Function
 
 End Module
