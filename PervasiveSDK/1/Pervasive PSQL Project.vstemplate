@@ -1,0 +1,29 @@
+<VSTemplate Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name Package="{53DB11ED-470E-4685-BBA2-9E82D59C1D45}" ID="115"/>
+    <Description Package="{53DB11ED-470E-4685-BBA2-9E82D59C1D45}" ID="116"/>
+    <Icon Package="{53DB11ED-470E-4685-BBA2-9E82D59C1D45}" ID="109"/>
+    <ProjectType>VisualBasic</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>Pervasive PSQL Project</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="Pervasive PSQL Project.vbproj" File="Pervasive PSQL Project.vbproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="true" TargetFileName="PervasivePSQLClass1.vb">PervasivePSQLClass1.vb</ProjectItem>
+      <Folder Name="My Project" TargetFolderName="My Project">
+          <ProjectItem ReplaceParameters="true" TargetFileName="AssemblyInfo.vb">AssemblyInfo.vb</ProjectItem>
+       </Folder>
+    </Project>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>PSQL.VisualStudio.DataTools, Version=2.0.0.0, Culture=Neutral, PublicKeyToken=91b9c41a8dd577b5, Custom=null</Assembly>
+    <FullClassName>PSQL.VisualStudio.DataTools.Wizards.IWizardImplementation</FullClassName>
+</WizardExtension>
+</VSTemplate>

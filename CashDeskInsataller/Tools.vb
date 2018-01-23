@@ -117,13 +117,13 @@ trypoint1:
             ProcesStatus = False
         End If
     End Function
-    Function StartProcess(procName As String, argument As String)
+    Function StartProcess(procName As String, Optional argument As String = "")
         Dim pInfo As New ProcessStartInfo()
 
         pInfo.FileName = procName
         pInfo.Arguments = argument
+
         Dim p As Process = Process.Start(pInfo)
-        'p.Start(procName, argument)
         p.WaitForExit()
 
 

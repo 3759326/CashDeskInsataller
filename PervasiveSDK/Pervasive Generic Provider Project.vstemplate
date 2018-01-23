@@ -1,0 +1,29 @@
+<VSTemplate Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name Package="{7E5434A6-1D48-4ad0-9AA8-B006316EB3B3}" ID="111"/>
+    <Description Package="{7E5434A6-1D48-4ad0-9AA8-B006316EB3B3}" ID="112"/>
+    <Icon Package="{7E5434A6-1D48-4ad0-9AA8-B006316EB3B3}" ID="109"/>
+    <ProjectType>VisualBasic</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>Pervasive Generic Provider Project</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="Pervasive Generic Provider Project.vbproj" File="Pervasive Generic Provider Project.vbproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="true" TargetFileName="PervasiveGenericProviderClass1.vb">PervasiveGenericProviderClass1.vb</ProjectItem>
+      <Folder Name="My Project" TargetFolderName="My Project">
+          <ProjectItem ReplaceParameters="true" TargetFileName="AssemblyInfo.vb">AssemblyInfo.vb</ProjectItem>
+       </Folder>
+    </Project>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>PSQL.VisualStudio.DataTools, Version=2.0.0.0, Culture=Neutral, PublicKeyToken=91b9c41a8dd577b5, Custom=null</Assembly>
+    <FullClassName>PSQL.VisualStudio.DataTools.Wizards.IWizardImplementation</FullClassName>
+</WizardExtension>
+</VSTemplate>

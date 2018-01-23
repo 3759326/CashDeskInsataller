@@ -270,6 +270,9 @@ WrongLineFound_SKIP:
                 Dim Result As New ArrayList
                 Try
                     For Each ParamKey In MainINI.Item(SectionKey).Keys
+                        If Left(ParamKey, 1) = ";" Then
+                            Continue For
+                        End If
                         Result.Add(ParamKey)
                     Next
                     If [Sorted] Then Array.Sort(Result.ToArray)
