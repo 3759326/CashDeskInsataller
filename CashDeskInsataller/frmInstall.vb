@@ -1,6 +1,13 @@
 ﻿Imports Ionic.Zip
 Imports System.IO
-Imports DTOLib2
+Imports DTOLib
+Imports Pervasive.Data.SqlClient
+
+'Imports DTOLib2
+
+
+
+
 
 
 
@@ -8,9 +15,12 @@ Imports DTOLib2
 Public Class frmInstall
 
     Dim cashDeskNum
+    Dim cashDeskPort
+    Dim cashDeskSettings
     Dim terminlPort
     Dim imgPath
     Dim destPath As String
+    Dim destPathSlash As String
     Dim paramINI As New Full_INI_Class
     Dim iniSections
     Dim iniPath = Application.StartupPath & "\settings.ini"
@@ -21,8 +31,9 @@ Public Class frmInstall
     Dim syswow64dir = Environment.GetEnvironmentVariable("WINDIR") & "\SysWOW64"
     Dim startupdir = Environment.GetFolderPath(Environment.SpecialFolder.Startup)
     Dim sysfontdir = Environment.GetEnvironmentVariable("WINDIR") & "\Fonts"
-    Dim privatSettinsPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\Bkc Corporation\JavaPosCATSevice\fourinone.properties"
+    Dim privatSettinsPath As String = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\Bkc Corporation\JavaPosCATSevice\fourinone.properties"
     Dim splitPath() As String
+    Dim dirFESOL As String
 
 
 
@@ -32,10 +43,21 @@ Public Class frmInstall
 
     Private Sub frmInstall_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         cashDeskNum = NumericUpDown1.Value
+        cashDeskPort = NumericUpDown3.Value
+        cashDeskSettings = TextBox3.Text
         terminlPort = NumericUpDown2.Value
+        dirFESOL = "c:\FESOL"
         destPath = TextBox1.Text
+        If destPath.LastIndexOf("\") <> Len(destPath) - 1 Then
+
+            destPathSlash = destPath & "\"
+        Else
+            destPathSlash = destPath
+
+        End If
+
     End Sub
-    Public Sub Logining(eventName As String, eventStatus As String)
+    Public Sub Logining(eventName As String, Optional eventStatus As String = Nothing)
         Dim listit As New ListViewItem(eventName)
         listit.UseItemStyleForSubItems = False
         listit.SubItems.Add(eventStatus)
@@ -107,6 +129,7 @@ Public Class frmInstall
         '    destPath = destPath & "\"
         'Else
         'End If
+
         TextBox1.Text = destPath
     End Sub
 
@@ -169,7 +192,16 @@ Public Class frmInstall
         Dim WOfflinePath As String
         Dim WOffExpPath As String
         ProgressBar1.Value = 0
-        'If TextBox1.Text = "" Then
+        If destPath.LastIndexOf("\") <> Len(destPath) - 1 Then
+
+            destPathSlash = destPath & "\"
+        Else
+            destPathSlash = destPath
+
+        End If
+        ' Проверяем заполненость параметров и путей
+
+        ' If TextBox1.Text = "" Or Directory.Exists(destPath) Or destPath = "" Then
         '    TextBox1.BackColor = Color.LightCoral
         '    MsgBox("Не задан путь для распаковки")
         '    Exit Sub
@@ -189,8 +221,9 @@ Public Class frmInstall
         '    Exit Sub
         'End If
 
-        Logining("Номер кассы установлен: " & cashDeskNum, "")
-        Logining("СОМпорт для терминала Private установлен: " & terminlPort, "")
+        'Logining("Номер кассы установлен: " & cashDeskNum, "")
+        'Logining("СОМпорт для терминала Private установлен: " & terminlPort, "")
+
 
         ' Начинаем расспаковку архива
         ' BackgroundWorker1.WorkerReportsProgress = True
@@ -201,31 +234,47 @@ Public Class frmInstall
 
         'Application.DoEvents()
         'End While
+
         ' Устанавливаем софт
         'install()
         'Копмруем и регистрим DLLки
         'DllReg()
+        'Копируем необходимые файлы
         'fileCopy()
-        'dirCopy()
+        'Копируем необходимые диретории
+        dirCopy()
+        'Копируем необходимые шрифты
         'fontCopy()
+
+        MsgBox(destPath)
+        MsgBox(destPath.LastIndexOf("\"),, Len(destPath) - 1)
+
+
+        WOfflinePath = "Fexpert\Fedata\Firms\Cash_Offline\WOffline.ini"
+        WOffExpPath = "Fexpert\Fedata\Firms\Cash_Offline\WOffExp.ini"
+
         'Прописывае в WOffline.ini номер кассы
-        If destPath.LastIndexOf("\") Then
-            WOfflinePath = "Fexpert\Fedata\Firms\Cash_Offline\WOffline.ini"
-            WOffExpPath = "Fexpert\Fedata\Firms\Cash_Offline\WOffExp.ini"
-        Else
-            WOfflinePath = "\Fexpert\Fedata\Firms\Cash_Offline\WOffline.ini"
-            WOffExpPath = "\Fexpert\Fedata\Firms\Cash_Offline\WOffExp.ini"
-        End If
-        'Прописывае в WOffline.ini номер кассы
-        'cashDescIniSet(destPath & WOfflinePath, "Cashdesk_Setting", "curCashdeskCode", cashDeskNum)
+        'cashDescIniSet(destPathSlash & WOfflinePath, "Cashdesk_Setting", "curCashdeskCode", cashDeskNum)
+
         'Чистим секцию WOffline.ini Cashdesk_Export
-        'cashDescIniClear(destPath & WOfflinePath, "Cashdesk_Export")
+        'cashDescIniClear(destPathSlash & WOfflinePath, "Cashdesk_Export")
+
         'Чистим секцию  WOffExp.ini Cashdesk_Export
-        'cashDescIniClear(destPath & WOffExpPath, "Cashdesk_Export")
+        'cashDescIniClear(destPathSlash & WOffExpPath, "Cashdesk_Export")
+
         'Меняем порт терминала привата
-        inLineReplace(privatSettinsPath, "ComPort", terminlPort)
+        ' inLineReplace(privatSettinsPath, "ComPort", terminlPort)
 
+        'Прописываем номер кассы в Финэксперте ( в базе), делаем настройку Pervasive
+        'dbChange()
 
+        'Чистим директории Shop, ShopOFFC, Log
+        'DirClear("Shop")
+        'DirClear("ShopOffC")
+        'DirClear("Log")
+
+        'помолясь, регистрим сервис VVFECTR.exe
+        StartProcess(dirFESOL & "\VVFECTRLauncherService.exe", "-install")
 
 
 
@@ -344,6 +393,9 @@ Public Class frmInstall
             Try
                 My.Computer.FileSystem.CopyDirectory(dirsourc, dirdest, True)
                 Logining("Директория " & splitPath(1) & " скопирована в " & dirdest, "Успех")
+                If splitPath(1) = "\FESOL" Then
+                    dirFESOL = dirdest
+                End If
             Catch ex As Exception
                 MsgBox(dirsourc & vbCrLf & dirdest & vbCrLf & ex.Message)
                 Logining("Ошибка копирования " & dirsourc & " в " & dirdest, "Нетого")
@@ -374,6 +426,8 @@ Public Class frmInstall
                 splitPath(0) = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu)
             Case LCase("Support")
                 splitPath(0) = Application.StartupPath & "\Support"
+            Case LCase("FEXPERT")
+                splitPath(0) = destPath
         End Select
         ' tmp.secondPart = Strings.Mid(path, InStr(path, ":") + 1)
 
@@ -482,47 +536,202 @@ Public Class frmInstall
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        ' Dim pws As Object
-        '  pws = CreateObject("DTO.DtoSession.1")
+
+        DirClear("Shop")
+        DirClear("ShopOffC")
+        DirClear("Log")
+
+    End Sub
+    Private Sub dbChange()
         Dim session As DtoSession
         Dim result As dtoResult
         Dim databas As DtoDatabase
+        'Dim dtoSettings As DtoSettings
+        Dim dtoSetting As DtoSetting
+        'Dim dtoCat As DtoCategories
+        'Dim category As DtoCategory
+        Dim sett As New DtoSelectionItems
 
+        'Пробуем подключиться к Pervasive Server
         session = New DtoSession
         databas = New DtoDatabase
-        result = session.Connect("Diempc")
-        MsgBox(result.ToString)
-        databas.Name = "SOCASHDESk"
-        databas.DataPath = "C:\Fexpert\Fedata\Firms\Cash_Offline"
-        databas.DdfPath = "C:\Fexpert\Fedata\Firms\Cash_Offline"
-        databas.DBCodePage = 1251
+
+        result = session.Connect("localhost")
+
+        Console.WriteLine(result.ToString)
+        Console.WriteLine(session.Connected)
+        If Not result = dtoResult.Dto_Success Then
+            MsgBox(session.Error(result))
+            Exit Sub
+        End If
+
+        'dtoCat = session.Categories
+        'For Each category In dtoCat
+        '    Console.WriteLine(category.Name & " = " & category.CategoryID)
+        '    ' dtoSettings = category.Settings
+
+
+        'Next
+        'dtoSettings = dtoCat(4).Settings
+        'For Each dtoSetting In dtoSettings
+        '    Console.WriteLine("Setting = " & dtoSetting.Name & "ID = " & dtoSetting.SettingID)
+        '    'Console.WriteLine(dtoSetting.AllPossibleSelections)
+        'Next
+
+        'Console.WriteLine(dtoSetting.Value)
+        'Dim selections As DtoSelectionItems
+        'Dim selection As DtoSelectionItem
+        'selections = dtoSetting.AllPossibleSelections
+
+        '  For Each selection In selections
+        ' Console.WriteLine(selection.String & " = " & selection.ItemID)
+        'Next
+
+        'Делаем настройку первасива (версия создаваемых файлов, раздел в Control Center - Compatibility -> Create File Version) устанавливаем 7.х
+        Try
+            dtoSetting = session.GetSetting(50)
+            sett.Add(dtoSetting.AllPossibleSelections.GetByID(3))
+            dtoSetting.Value = sett
+            Logining("Настройка первасива Create File Version=7.х выполнена", "Успех")
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Logining("Не удалось установить настройку первасива Create File Version=7.х", "Нетого")
+        End Try
+
+
+
+
+
+        'Пробуем зарегестрировать базу настроек кассы в Pervasive
+        databas.Name = "CashOffline"
+        databas.DataPath = destPathSlash & "Fexpert\Fedata\Firms\Cash_Offline"
+        databas.DdfPath = destPathSlash & "Fexpert\Fedata\Firms\Cash_Offline"
+        databas.DBCodePage = dtoDbCodePage.dtoDbZeroCodePage
+
         databas.Flags = 0
-        MsgBox(session.Databases.Count)
+        'MsgBox(session.ConnectionID)
+
+
 
         result = session.Databases.Add(databas)
-        MsgBox(result)
+        If Not result = dtoResult.Dto_Success Then
+
+            If result = dtoResult.Dto_errDuplicateName Then
+                Logining("База CashOffline уже зарегестрированна", "Внимание")
+                session.Disconnect()
+            Else
+
+                MsgBox("Ошибка регистрации базы данных," & vbCrLf & result.ToString & vbCrLf & " проверьте работу Pervasive Server")
+                Logining("Ошибка регистрации базы данных," & session.Error(result) & " проверьте работу Pervasive Server", "Нетого")
+                'Console.WriteLine(session.Error(result))
+                session.Disconnect()
+                Exit Sub
+            End If
+        Else
+                Logining("База CashOffline подключена ", "Успех")
+            session.Disconnect()
+        End If
 
 
 
-        MsgBox(session.Databases.Count)
-        For i = 1 To session.Databases.Count
-            MsgBox(session.Databases(i).Name)
+
+
+        'MsgBox(session.Databases.Count)
+        'For i = 1 To session.Databases.Count
+        '    MsgBox(session.Databases(i).Name)
+
+        'Next
+        ''    MsgBox(datab)
+        ''Next
+        'MsgBox(result)
+        'MsgBox(session.Error(result))
+
+        'Пробуем подключиться к базе
+        Dim Conn As New PsqlConnection("Host=localhost;Port=1583;Database=CashOffline; Encoding=1251")
+        Try
+            Conn.Open()
+            Logining("Подключени к базе CashOffline", "Успех")
+        Catch ex As Exception
+            Logining("Ошибка подключения к базе CashOffline", "Нетого")
+            Logining(ex.Message, "")
+            Exit Sub
+        End Try
+
+        Dim doCmd As PsqlCommand
+        Dim dataread As PsqlDataReader
+        'Dim dataupdate As psql
+        'dataread = doCmd.ExecuteReader
+        'While dataread.Read()
+        '    Console.WriteLine("ctCode=" & dataread("ctCode").ToString)
+        '    Console.WriteLine("ctName=" & dataread("ctName").ToString)
+        'End While
+        'Пробуем писать в базу
+
+        Dim cashDescName As String = "Касса " & cashDeskNum
+        Try
+            doCmd = New PsqlCommand("UPDATE SO_SHOPCASH Set ctCode='" & cashDeskNum & "' , ctName='" & cashDescName & "', cashCode='" & cashDeskNum & "', COMMport='" & cashDeskPort & "', COMMsetting='" & cashDeskSettings & "'", Conn)
+            doCmd.ExecuteNonQuery()
+            Logining("Параметры касса оюновленны успешно", "Успех")
+        Catch ex As Exception
+            Logining("Ошибка записи параметров кассы в БД", "Нетого")
+            Logining(ex.Message, "")
+            Conn.Close()
+            Exit Sub
+        End Try
+
+        'попробуем прочитать записанное
+        Try
+            doCmd = New PsqlCommand("SELECT ctCode,ctName,cashCode, COMMport,COMMsetting FROM SO_SHOPCASH", Conn)
+            dataread = doCmd.ExecuteReader
+            While dataread.Read()
+                Logining("ID кассы = " & dataread("ctCode").ToString)
+                Logining("Имя кассы = " & dataread("ctName").ToString)
+                Logining("Код кассы = " & dataread("cashCode").ToString)
+                Logining("COM порт кассы установлен =" & dataread("COMMport").ToString)
+                Logining("Настройки ком порта = " & dataread("COMMsetting").ToString)
+            End While
+        Catch ex As Exception
+            Logining("Ошибка чтения параметров кассы в БД", "Нетого")
+            Logining(ex.Message, "")
+            Conn.Close()
+            Exit Sub
+        End Try
+
+        Conn.Close()
+
+    End Sub
+    Private Sub DirClear(searchDir As String)
+        Dim clearPath As String = destPathSlash & "Fexpert\Fedata\Firms\Cash_Offline\"
+        Dim clearDirs() As String = Directory.GetDirectories(clearPath, searchDir, searchOption:=SearchOption.AllDirectories)
+        Dim clearFiles() As String
+
+        For Each dir As String In clearDirs
+            If dir <> clearPath & "ShopOffC" Then
+                clearFiles = Directory.GetFiles(dir)
+                If clearFiles.Length = 0 Then
+                    Logining("Директория  " & dir & " пуста", "Успех")
+                End If
+                For Each clsFile In clearFiles
+                        Try
+                            File.Delete(clsFile)
+                        Logining("Директория  " & dir & " очищена", "Успех")
+                    Catch ex As Exception
+                            Logining("Ошибка удаления файла " & clsFile, "Нетого")
+                        End Try
+
+                    Next
+
+                End If
 
         Next
-        '    MsgBox(datab)
-        'Next
-        MsgBox(result)
-        MsgBox(session.Error(result))
 
 
+    End Sub
+    Private Sub NumericUpDown3_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown3.ValueChanged
+        cashDeskPort = NumericUpDown3.Value
+    End Sub
 
-
-
-
-        '        MsgBox(windir)
-        '       MsgBox(systemdir)
-        '      MsgBox(syswow64dir)
-        '     MsgBox(startupdir)
-
+    Private Sub TextBox3_TextChanged(sender As Object, e As EventArgs) Handles TextBox3.TextChanged
+        cashDeskSettings = TextBox3.Text
     End Sub
 End Class

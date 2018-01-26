@@ -63,6 +63,14 @@
     <Reference Include="Ionic.Zip">
       <HintPath>..\..\..\VisualBasic\VB\WinForms-DotNetZip\WinForms-Unzip\Ionic.Zip.dll</HintPath>
     </Reference>
+    <Reference Include="Pervasive.Data.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c84cd5c63851e072, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Pervasive Software\PSQL\bin\3.0\Pervasive.Data.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Pervasive.Data.SqlClient, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c84cd5c63851e072, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Pervasive Software\PSQL\bin\3.0\Pervasive.Data.SqlClient.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
