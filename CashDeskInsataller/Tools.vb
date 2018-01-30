@@ -56,11 +56,33 @@ trypoint2:
                         GoTo trypoint2
                     End If
 
+
                 Catch ex As Exception
 
                     'MsgBox(ex.Message)
                     frmArchive.Logining(ex.Message, "Внимание")
                 End Try
+            Case "Restart"
+                Try
+                    sc.Stop()
+                    sc.Refresh()
+                Catch ex As Exception
+
+                End Try
+
+                Threading.Thread.Sleep(2000)
+                Console.WriteLine(sc.Status)
+
+                Try
+                    sc.Refresh()
+                    Console.WriteLine(sc.Status)
+                    sc.Start()
+                    Threading.Thread.Sleep(2000)
+                Catch ex As Exception
+                    frmInstall.Logining(ex.Message, "Внимание")
+                End Try
+                frmInstall.Logining(srvName & " перезапущенна", "Успех")
+                'sc.Refresh()
             Case "Status"
                 'SrvService = sc.Status
 
@@ -119,12 +141,17 @@ trypoint1:
     End Function
     Function StartProcess(procName As String, Optional argument As String = "")
         Dim pInfo As New ProcessStartInfo()
-
+        Dim fileName As String
         pInfo.FileName = procName
         pInfo.Arguments = argument
-
-        Dim p As Process = Process.Start(pInfo)
-        p.WaitForExit()
+        fileName = Mid(procName, procName.LastIndexOf("\") + 2)
+        Try
+            Dim p As Process = Process.Start(pInfo)
+            p.WaitForExit()
+            frmInstall.Logining("Установка " & fileName & " завершена", "Успех")
+        Catch ex As Exception
+            frmInstall.Logining(fileName & " " & ex.Message, "Внимание")
+        End Try
 
 
     End Function

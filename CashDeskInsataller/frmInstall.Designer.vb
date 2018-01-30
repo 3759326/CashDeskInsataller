@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmInstall
     Inherits System.Windows.Forms.Form
 
     'Форма переопределяет dispose для очистки списка компонентов.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class frmInstall
     'Примечание: следующая процедура является обязательной для конструктора форм Windows Forms
     'Для ее изменения используйте конструктор форм Windows Form.  
     'Не изменяйте ее в редакторе исходного кода.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.TextBox3 = New System.Windows.Forms.TextBox()
@@ -138,14 +138,14 @@ Partial Class frmInstall
         Me.GroupBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.GroupBox2.Location = New System.Drawing.Point(12, 96)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(514, 62)
+        Me.GroupBox2.Size = New System.Drawing.Size(638, 62)
         Me.GroupBox2.TabIndex = 1
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Путь к файлу образа кассы"
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(430, 20)
+        Me.Button1.Location = New System.Drawing.Point(541, 24)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(76, 28)
         Me.Button1.TabIndex = 1
@@ -159,7 +159,7 @@ Partial Class frmInstall
         Me.TextBox2.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.TextBox2.Location = New System.Drawing.Point(15, 24)
         Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(401, 23)
+        Me.TextBox2.Size = New System.Drawing.Size(504, 23)
         Me.TextBox2.TabIndex = 0
         '
         'GroupBox3
@@ -167,7 +167,7 @@ Partial Class frmInstall
         Me.GroupBox3.Controls.Add(Me.NumericUpDown2)
         Me.GroupBox3.Cursor = System.Windows.Forms.Cursors.Default
         Me.GroupBox3.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.GroupBox3.Location = New System.Drawing.Point(323, 12)
+        Me.GroupBox3.Location = New System.Drawing.Point(416, 12)
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.Size = New System.Drawing.Size(203, 78)
         Me.GroupBox3.TabIndex = 2
@@ -189,7 +189,7 @@ Partial Class frmInstall
         Me.GroupBox4.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.GroupBox4.Location = New System.Drawing.Point(12, 229)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(514, 139)
+        Me.GroupBox4.Size = New System.Drawing.Size(638, 195)
         Me.GroupBox4.TabIndex = 3
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Лог"
@@ -198,9 +198,9 @@ Partial Class frmInstall
         '
         Me.ListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.Событие, Me.Статус})
         Me.ListView1.FullRowSelect = True
-        Me.ListView1.Location = New System.Drawing.Point(15, 22)
+        Me.ListView1.Location = New System.Drawing.Point(15, 20)
         Me.ListView1.Name = "ListView1"
-        Me.ListView1.Size = New System.Drawing.Size(482, 106)
+        Me.ListView1.Size = New System.Drawing.Size(617, 167)
         Me.ListView1.TabIndex = 0
         Me.ListView1.UseCompatibleStateImageBehavior = False
         Me.ListView1.View = System.Windows.Forms.View.Details
@@ -218,7 +218,7 @@ Partial Class frmInstall
         'Button2
         '
         Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Button2.Location = New System.Drawing.Point(442, 417)
+        Me.Button2.Location = New System.Drawing.Point(553, 475)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(89, 31)
         Me.Button2.TabIndex = 4
@@ -228,7 +228,7 @@ Partial Class frmInstall
         'Button3
         '
         Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Button3.Location = New System.Drawing.Point(341, 418)
+        Me.Button3.Location = New System.Drawing.Point(460, 476)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(87, 29)
         Me.Button3.TabIndex = 5
@@ -237,16 +237,16 @@ Partial Class frmInstall
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(12, 390)
+        Me.ProgressBar1.Location = New System.Drawing.Point(12, 443)
         Me.ProgressBar1.Name = "ProgressBar1"
-        Me.ProgressBar1.Size = New System.Drawing.Size(514, 23)
+        Me.ProgressBar1.Size = New System.Drawing.Size(632, 23)
         Me.ProgressBar1.TabIndex = 6
         '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label1.Location = New System.Drawing.Point(246, 416)
+        Me.Label1.Location = New System.Drawing.Point(307, 469)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(28, 17)
         Me.Label1.TabIndex = 7
@@ -254,7 +254,7 @@ Partial Class frmInstall
         '
         'Label2
         '
-        Me.Label2.Location = New System.Drawing.Point(20, 356)
+        Me.Label2.Location = New System.Drawing.Point(15, 427)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(497, 15)
         Me.Label2.TabIndex = 8
@@ -270,14 +270,14 @@ Partial Class frmInstall
         Me.GroupBox5.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.GroupBox5.Location = New System.Drawing.Point(12, 164)
         Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.Size = New System.Drawing.Size(513, 58)
+        Me.GroupBox5.Size = New System.Drawing.Size(638, 58)
         Me.GroupBox5.TabIndex = 9
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Путь расспаковки"
         '
         'Button4
         '
-        Me.Button4.Location = New System.Drawing.Point(430, 18)
+        Me.Button4.Location = New System.Drawing.Point(542, 20)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(75, 27)
         Me.Button4.TabIndex = 1
@@ -288,7 +288,7 @@ Partial Class frmInstall
         '
         Me.TextBox1.Location = New System.Drawing.Point(17, 22)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(399, 23)
+        Me.TextBox1.Size = New System.Drawing.Size(502, 23)
         Me.TextBox1.TabIndex = 0
         Me.TextBox1.Text = "C:\"
         '
@@ -299,7 +299,7 @@ Partial Class frmInstall
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(540, 467)
+        Me.ClientSize = New System.Drawing.Size(662, 518)
         Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)

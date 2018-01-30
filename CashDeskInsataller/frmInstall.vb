@@ -3,6 +3,8 @@ Imports System.IO
 Imports DTOLib
 Imports Pervasive.Data.SqlClient
 
+
+
 'Imports DTOLib2
 
 
@@ -14,26 +16,31 @@ Imports Pervasive.Data.SqlClient
 
 Public Class frmInstall
 
-    Dim cashDeskNum
-    Dim cashDeskPort
-    Dim cashDeskSettings
-    Dim terminlPort
-    Dim imgPath
+    Dim cashDeskNum As String
+    Dim cashDeskPort As String
+    Dim cashDeskSettings As String
+    Dim terminlPort As String
+    Dim imgPath As String
     Dim destPath As String
     Dim destPathSlash As String
     Dim paramINI As New Full_INI_Class
     Dim iniSections
-    Dim iniPath = Application.StartupPath & "\settings.ini"
+    Dim iniPath As String = Application.StartupPath & "\settings.ini"
     Dim iniParameters()
-    Dim installDir = Application.StartupPath & "\Support\"
-    Dim windir = Environment.GetEnvironmentVariable("WINDIR")
-    Dim systemdir = Environment.GetFolderPath(Environment.SpecialFolder.System)
-    Dim syswow64dir = Environment.GetEnvironmentVariable("WINDIR") & "\SysWOW64"
-    Dim startupdir = Environment.GetFolderPath(Environment.SpecialFolder.Startup)
-    Dim sysfontdir = Environment.GetEnvironmentVariable("WINDIR") & "\Fonts"
+    Dim installDir As String = Application.StartupPath & "\Support\"
+    Dim windir As String = Environment.GetEnvironmentVariable("WINDIR")
+    Dim systemdir As String = Environment.GetFolderPath(Environment.SpecialFolder.System)
+    Dim syswow64dir As String = Environment.GetEnvironmentVariable("WINDIR") & "\SysWOW64"
+    Dim startupdir As String = Environment.GetFolderPath(Environment.SpecialFolder.Startup)
+    Dim sysfontdir As String = Environment.GetEnvironmentVariable("WINDIR") & "\Fonts"
     Dim privatSettinsPath As String = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\Bkc Corporation\JavaPosCATSevice\fourinone.properties"
     Dim splitPath() As String
     Dim dirFESOL As String
+    Dim logFile As String
+    Dim logWriter As StreamWriter
+    Dim progTxt As Double
+
+
 
 
 
@@ -42,10 +49,10 @@ Public Class frmInstall
 
 
     Private Sub frmInstall_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        cashDeskNum = NumericUpDown1.Value
-        cashDeskPort = NumericUpDown3.Value
+        cashDeskNum = NumericUpDown1.Value.ToString
+        cashDeskPort = NumericUpDown3.Value.ToString
         cashDeskSettings = TextBox3.Text
-        terminlPort = NumericUpDown2.Value
+        terminlPort = NumericUpDown2.Value.ToString
         dirFESOL = "c:\FESOL"
         destPath = TextBox1.Text
         If destPath.LastIndexOf("\") <> Len(destPath) - 1 Then
@@ -56,6 +63,11 @@ Public Class frmInstall
 
         End If
 
+    End Sub
+    Private Sub LogFileInit()
+        logFile = Application.StartupPath & "\Log" & "\CashDesk" & cashDeskNum & "_install_" & Now.ToShortDateString & ".log"
+        logWriter = New StreamWriter(logFile, append:=True)
+        logWriter.AutoFlush = True
     End Sub
     Public Sub Logining(eventName As String, Optional eventStatus As String = Nothing)
         Dim listit As New ListViewItem(eventName)
@@ -80,9 +92,21 @@ Public Class frmInstall
 
 
 
+        Label2.Text = eventName & " - " & eventStatus
 
         ListView1.Items.Add(listit)
         ListView1.EnsureVisible(ListView1.Items.Count - 1)
+
+        Try
+            logWriter.WriteLine(Now & " " & eventName & " - " & eventStatus)
+            logWriter.Flush()
+        Catch ex As Exception
+            LogFileInit()
+            logWriter.WriteLine(Now & " " & eventName & " - " & eventStatus)
+            logWriter.Flush()
+        End Try
+
+
     End Sub
 
     Private Sub frmInstall_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
@@ -92,6 +116,7 @@ Public Class frmInstall
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         'OpenFileDialog1.FileName = archName
+        Dim openRes
         OpenFileDialog1.Filter = "zip files (*.zip)|"
         OpenFileDialog1.InitialDirectory = Application.StartupPath & "\Archive"
         OpenFileDialog1.CheckPathExists = True
@@ -99,11 +124,19 @@ Public Class frmInstall
         OpenFileDialog1.ReadOnlyChecked = True
         OpenFileDialog1.CheckFileExists = False
         OpenFileDialog1.ValidateNames = False
-        OpenFileDialog1.ShowDialog()
-        imgPath = OpenFileDialog1.FileName
-        'txtDest.Text = pathDest
-        TextBox2.Text = imgPath
-        MsgBox(imgPath)
+        openRes = OpenFileDialog1.ShowDialog()
+        Select Case openRes
+            Case vbOK
+                imgPath = OpenFileDialog1.FileName
+
+                TextBox2.Text = imgPath
+            Case vbCancel
+
+                MsgBox("Путь не задан")
+
+        End Select
+
+
 
 
     End Sub
@@ -114,11 +147,14 @@ Public Class frmInstall
 
     Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
         imgPath = TextBox2.Text
-        MsgBox(imgPath)
+        TextBox2.BackColor = Color.White
+        'MsgBox(imgPath)
     End Sub
 
     Private Sub NumericUpDown1_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown1.ValueChanged
         cashDeskNum = NumericUpDown1.Value
+        NumericUpDown1.BackColor = Color.White
+
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
@@ -134,13 +170,16 @@ Public Class frmInstall
     End Sub
 
     Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
-
+        TextBox1.BackColor = Color.White
         destPath = TextBox1.Text
 
     End Sub
     Private Sub unZip(sources As String, dest As String)
         Dim options As New ReadOptions
-        Logining("Распаковка архива начата", "Успех")
+        Me.Invoke(Sub()
+                      Logining("Распаковка архива начата", "Успех")
+
+                  End Sub)
         options.Encoding = System.Text.Encoding.GetEncoding("CP866")
         Using zip1 As ZipFile = ZipFile.Read(sources, options)
 
@@ -150,7 +189,13 @@ Public Class frmInstall
 
         End Using
     End Sub
+    Private Sub progress(plus As Integer)
+        ProgressBar1.Value = progTxt + plus
+        Label1.Text = progTxt + plus & " %"
+
+    End Sub
     Private Sub UnZipProgress(ByVal sender As Object, ByVal e As ExtractProgressEventArgs)
+
         Console.WriteLine(e.EventType)
         Select Case e.EventType
             Case ZipProgressEventType.Extracting_EntryBytesWritten
@@ -158,14 +203,24 @@ Public Class frmInstall
 
 
                 'Console.WriteLine(e.BytesTransferred)
-
-            Case ZipProgressEventType.Extracting_AfterExtractEntry
-
                 Me.Invoke(Sub()
                               Label2.Text = "Распаковка архива: " & e.CurrentEntry.FileName
-                              ProgressBar1.Maximum = e.EntriesTotal + 30
-                              Label1.Text = Math.Round((e.EntriesExtracted * 100 / e.EntriesTotal)) - 30 & " %"
-                              ProgressBar1.Value = e.EntriesExtracted
+
+
+                          End Sub)
+            Case ZipProgressEventType.Extracting_AfterExtractEntry
+                Me.Invoke(Sub()
+
+                              Label2.Text = "Распаковка архива: " & e.CurrentEntry.FileName
+                              ProgressBar1.Maximum = 100
+                              progTxt = Math.Round((e.EntriesExtracted * 50 / e.EntriesTotal))
+                              ' If progTxt < 30 Then
+                              'Label1.Text = "0" & " %"
+                              'Else
+                              Label1.Text = progTxt.ToString & " %"
+                              'End If
+
+                              ProgressBar1.Value = progTxt
 
 
 
@@ -191,6 +246,7 @@ Public Class frmInstall
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         Dim WOfflinePath As String
         Dim WOffExpPath As String
+
         ProgressBar1.Value = 0
         If destPath.LastIndexOf("\") <> Len(destPath) - 1 Then
 
@@ -199,84 +255,107 @@ Public Class frmInstall
             destPathSlash = destPath
 
         End If
+
         ' Проверяем заполненость параметров и путей
 
-        ' If TextBox1.Text = "" Or Directory.Exists(destPath) Or destPath = "" Then
-        '    TextBox1.BackColor = Color.LightCoral
-        '    MsgBox("Не задан путь для распаковки")
-        '    Exit Sub
+        If TextBox1.Text = "" Or Directory.Exists(destPath) = False Or destPath = "" Then
+            TextBox1.BackColor = Color.LightCoral
+            MsgBox("Не задан путь для распаковки")
+            Exit Sub
 
-        'ElseIf TextBox2.Text = "" Then
-        '    TextBox2.BackColor = Color.LightCoral
-        '    MsgBox("Не задан путь к архиву")
-        '    Exit Sub
+        ElseIf TextBox2.Text = "" Or imgPath = "" Then
+            TextBox2.BackColor = Color.LightCoral
+            MsgBox("Не задан путь к архиву")
+            Exit Sub
 
-        'ElseIf NumericUpDown1.Value = "0" Then
-        '    NumericUpDown1.BackColor = Color.LightCoral
-        '    MsgBox("Не задан номер кассы")
-        '    Exit Sub
-        'ElseIf NumericUpDown2.Value = "0" Then
-        '    NumericUpDown2.BackColor = Color.LightCoral
-        '    MsgBox("Не задан номер СOMпорта терминала")
-        '    Exit Sub
-        'End If
-
-        'Logining("Номер кассы установлен: " & cashDeskNum, "")
-        'Logining("СОМпорт для терминала Private установлен: " & terminlPort, "")
+        ElseIf NumericUpDown1.Value = "0" Then
+            NumericUpDown1.BackColor = Color.LightCoral
+            MsgBox("Не задан номер кассы")
+            Exit Sub
+        ElseIf NumericUpDown2.Value = "0" Then
+            NumericUpDown2.BackColor = Color.LightCoral
+            MsgBox("Не задан номер СOMпорта терминала")
+            Exit Sub
+        End If
 
 
-        ' Начинаем расспаковку архива
-        ' BackgroundWorker1.WorkerReportsProgress = True
-        'BackgroundWorker1.RunWorkerAsync()
-        ' BackgroundWorker1.RunWorkerAsync()
-        'While (BackgroundWorker1.IsBusy)
+        LogFileInit()
+
+        Logining("---------- Начнемс...---------")
+        Logining("------------------------------")
+        Button3.Enabled = False
 
 
-        'Application.DoEvents()
-        'End While
+        'Начинаем расспаковку архива
+        BackgroundWorker1.WorkerReportsProgress = True
+        BackgroundWorker1.RunWorkerAsync()
 
+        While (BackgroundWorker1.IsBusy)
+
+
+            Application.DoEvents()
+        End While
+        ' MsgBox("Async")
         ' Устанавливаем софт
-        'install()
+        install()
+
+
         'Копмруем и регистрим DLLки
-        'DllReg()
+        '-------------------------------------------------
+        DllReg()
+
+        progress(15)
+
         'Копируем необходимые файлы
-        'fileCopy()
+        fileCopy()
+        progress(5)
         'Копируем необходимые диретории
         dirCopy()
+        progress(5)
         'Копируем необходимые шрифты
-        'fontCopy()
+        fontCopy()
+        progress(5)
 
-        MsgBox(destPath)
-        MsgBox(destPath.LastIndexOf("\"),, Len(destPath) - 1)
+        'MsgBox(destPath)
+        'MsgBox(destPath.LastIndexOf("\"),, Len(destPath) - 1)
 
 
         WOfflinePath = "Fexpert\Fedata\Firms\Cash_Offline\WOffline.ini"
         WOffExpPath = "Fexpert\Fedata\Firms\Cash_Offline\WOffExp.ini"
 
         'Прописывае в WOffline.ini номер кассы
-        'cashDescIniSet(destPathSlash & WOfflinePath, "Cashdesk_Setting", "curCashdeskCode", cashDeskNum)
+        cashDescIniSet(destPathSlash & WOfflinePath, "Cashdesk_Setting", "curCashdeskCode", cashDeskNum)
 
         'Чистим секцию WOffline.ini Cashdesk_Export
-        'cashDescIniClear(destPathSlash & WOfflinePath, "Cashdesk_Export")
+        cashDescIniClear(destPathSlash & WOfflinePath, "Cashdesk_Export")
 
         'Чистим секцию  WOffExp.ini Cashdesk_Export
-        'cashDescIniClear(destPathSlash & WOffExpPath, "Cashdesk_Export")
+        cashDescIniClear(destPathSlash & WOffExpPath, "Cashdesk_Export")
 
         'Меняем порт терминала привата
-        ' inLineReplace(privatSettinsPath, "ComPort", terminlPort)
-
+        inLineReplace(privatSettinsPath, "ComPort", terminlPort)
+        progress(5)
         'Прописываем номер кассы в Финэксперте ( в базе), делаем настройку Pervasive
-        'dbChange()
-
+        'SrvControl("Pervasive.SQL (transactional)", "Restart")
+        'SrvControl("Pervasive.SQL (relational)", "Restart")
+        dbChange()
+        progress(5)
         'Чистим директории Shop, ShopOFFC, Log
-        'DirClear("Shop")
-        'DirClear("ShopOffC")
-        'DirClear("Log")
-
+        DirClear("Shop")
+        DirClear("ShopOffC")
+        DirClear("Log")
+        progress(5)
         'помолясь, регистрим сервис VVFECTR.exe
         StartProcess(dirFESOL & "\VVFECTRLauncherService.exe", "-install")
-
-
+        Logining("---------------------------------------------")
+        Logining("---------   ФСЕ!   ---------")
+        Logining("---------------------------------------------")
+        ProgressBar1.Value = 100
+        Label1.Text = "100 %"
+        Console.WriteLine("Finish")
+        logWriter.Close()
+        logWriter.Dispose()
+        Button3.Enabled = True
 
     End Sub
     Private Sub install()
@@ -286,9 +365,9 @@ Public Class frmInstall
 
         iniParameters = paramINI.Get_ListOf_Parameters("INSTALL")
         For Each iniParametr In iniParameters
-
+            Logining("Установка " & iniParametr & " начата")
             StartProcess(installDir & iniParametr, paramINI.Get_Value("INSTALL", iniParametr))
-            Logining("Установка " & iniParametr & " завершена", "Успех")
+
             Threading.Thread.Sleep(100)
         Next
 
@@ -317,11 +396,14 @@ Public Class frmInstall
             End If
 
         Next
+        logWriter.Close()
+        logWriter.Dispose()
 
     End Sub
     Private Sub fileCopy()
         Dim stdPathres1 As String
         Dim stdPathres2 As String
+
 
         Dim fsources
         Dim fname
@@ -336,7 +418,7 @@ Public Class frmInstall
                 stdPath(iniParametr)
 
                 fname = Mid(splitPath(1), splitPath(1).LastIndexOf("\") + 1)
-                MsgBox(fname)
+
                 fsources = splitPath(0) & splitPath(1)
             Else
                 fsources = iniParametr
@@ -353,7 +435,7 @@ Public Class frmInstall
                 'MsgBox((stdPath(iniParametr).firstPart & stdPath(iniParametr).secondPart))
                 'MsgBox(stdPath(iniParametr).secondPart)
                 Logining("Файл " & fname & " скопирован в " & fdest, "Успех")
-            Catch ex As Exception
+            Catch ex As IOException
                 MsgBox(fsources & vbCrLf & fdest & fname & vbCrLf & ex.Message)
                 Logining("Ошибка копирования " & fname & " в " & fdest, "Нетого")
             End Try
@@ -419,7 +501,11 @@ Public Class frmInstall
             Case LCase("Program")
                 splitPath(0) = Environment.GetFolderPath(Environment.SpecialFolder.Programs)
             Case LCase("ProgramFile")
-                splitPath(0) = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
+                If Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\SysWOW64") Then
+                    splitPath(0) = "\Program Files"
+                Else
+                    splitPath(0) = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
+                End If
             Case LCase("Startup")
                 splitPath(0) = Environment.GetFolderPath(Environment.SpecialFolder.Startup)
             Case LCase("Startmenu")
@@ -489,21 +575,25 @@ Public Class frmInstall
         paramINI.SaveFile()
     End Sub
     Private Sub inLineReplace(file As String, strfind As String, strReplace As String)
-        Dim fileArr() As String = IO.File.ReadAllLines(file)
+        Dim fileArr() As String
         Dim i As Integer
 
+        Try
+            fileArr = IO.File.ReadAllLines(file)
+            For Each readstr In fileArr
 
+                If InStr(readstr, strfind) Then
 
-        For Each readstr In fileArr
+                    fileArr(i) = strReplace
+                    IO.File.WriteAllLines(file, fileArr)
+                    Exit Sub
+                End If
+                i += 1
+            Next
+        Catch ex As Exception
+            Logining(ex.Message, "Нетого")
+        End Try
 
-            If InStr(readstr, strfind) Then
-
-                fileArr(i) = strReplace
-                IO.File.WriteAllLines(file, fileArr)
-                Exit Sub
-            End If
-            i += 1
-        Next
 
 
     End Sub
@@ -532,17 +622,36 @@ Public Class frmInstall
 
     Private Sub NumericUpDown2_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown2.ValueChanged
         terminlPort = NumericUpDown2.Value
-        Console.WriteLine(terminlPort)
+        NumericUpDown2.BackColor = Color.White
+        'Console.WriteLine(terminlPort)
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
 
-        DirClear("Shop")
-        DirClear("ShopOffC")
-        DirClear("Log")
+        'DirClear("Shop")
+        'DirClear("ShopOffC")
+        'DirClear("Log")
+        'Console.WriteLine(Math.Round(56954.515, 2))
+        'SrvControl("Pervasive.SQL (transactional)", "Restart")
+        'SrvControl("Pervasive.SQL (relational)", "Restart")
+        'dbChange()
+        For Each de As DictionaryEntry In Environment.GetEnvironmentVariables()
+            Console.WriteLine("  {0} = {1}", de.Key, de.Value)
+        Next
+
+
+
+
 
     End Sub
-    Private Sub dbChange()
+    Private Sub PervasConn()
+        ' Dim dbtt As New Dbtool
+        ' dbtt.dbt()
+
+
+        'StartProcess(Application.StartupPath & "\dbupdate.exe", destPathSlash)
+
+        Dim pdb As Object
         Dim session As DtoSession
         Dim result As dtoResult
         Dim databas As DtoDatabase
@@ -551,6 +660,9 @@ Public Class frmInstall
         'Dim dtoCat As DtoCategories
         'Dim category As DtoCategory
         Dim sett As New DtoSelectionItems
+
+        'pdb = CreateObject("DTOLib.dll.1")
+
 
         'Пробуем подключиться к Pervasive Server
         session = New DtoSession
@@ -561,7 +673,103 @@ Public Class frmInstall
         Console.WriteLine(result.ToString)
         Console.WriteLine(session.Connected)
         If Not result = dtoResult.Dto_Success Then
-            MsgBox(session.Error(result))
+            MsgBox("Connect pervasive " & session.Error(result))
+            Exit Sub
+        End If
+
+        'dtoCat = session.Categories
+        'For Each category In dtoCat
+        '    Console.WriteLine(category.Name & " = " & category.CategoryID)
+        '    ' dtoSettings = category.Settings
+
+
+        'Next
+        'dtoSettings = dtoCat(4).Settings
+        'For Each dtoSetting In dtoSettings
+        '    Console.WriteLine("Setting = " & dtoSetting.Name & "ID = " & dtoSetting.SettingID)
+        '    'Console.WriteLine(dtoSetting.AllPossibleSelections)
+        'Next
+
+        'Console.WriteLine(dtoSetting.Value)
+        'Dim selections As DtoSelectionItems
+        'Dim selection As DtoSelectionItem
+        'selections = dtoSetting.AllPossibleSelections
+
+        '  For Each selection In selections
+        ' Console.WriteLine(selection.String & " = " & selection.ItemID)
+        'Next
+
+        'Делаем настройку первасива (версия создаваемых файлов, раздел в Control Center - Compatibility -> Create File Version) устанавливаем 7.х
+        Try
+            dtoSetting = session.GetSetting(50)
+            sett.Add(dtoSetting.AllPossibleSelections.GetByID(3))
+            dtoSetting.Value = sett
+            MsgBox("Настройка первасива Create File Version=7.х выполнена",, "Успех")
+            'Logining("Настройка первасива Create File Version=7.х выполнена", "Успех")
+        Catch ex As Exception
+            MsgBox("Pervasive settnigs " & ex.Message)
+            '  Logining("Не удалось установить настройку первасива Create File Version=7.х", "Нетого")
+        End Try
+
+
+
+
+
+        'Пробуем зарегестрировать базу настроек кассы в Pervasive
+        databas.Name = "CashOffline"
+        databas.DataPath = destPathSlash & "Fexpert\Fedata\Firms\Cash_Offline"
+        databas.DdfPath = destPathSlash & "Fexpert\Fedata\Firms\Cash_Offline"
+        databas.DBCodePage = dtoDbCodePage.dtoDbZeroCodePage
+
+        databas.Flags = 0
+        'MsgBox(session.ConnectionID)
+
+
+
+        result = session.Databases.Add(databas)
+        If Not result = dtoResult.Dto_Success Then
+
+            If result = dtoResult.Dto_errDuplicateName Then
+                MsgBox("База CashOffline уже зарегестрированна", , "Внимание")
+                session.Disconnect()
+            Else
+
+                MsgBox("Ошибка регистрации базы данных," & vbCrLf & session.Error(result) & vbCrLf & " проверьте работу Pervasive Server")
+                ' Logining("Ошибка регистрации базы данных," &  & " проверьте работу Pervasive Server", "Нетого")
+                'Console.WriteLine(session.Error(result))
+                session.Disconnect()
+                Exit Sub
+            End If
+        Else
+            MsgBox("База CashOffline подключена ", , "Успех")
+            session.Disconnect()
+        End If
+
+
+    End Sub
+    Private Sub dbChange()
+
+        Dim session As DtoSession
+        Dim result As dtoResult
+        Dim databas As DtoDatabase
+        'Dim dtoSettings As DtoSettings
+        Dim dtoSetting As DtoSetting
+        'Dim dtoCat As DtoCategories
+        'Dim category As DtoCategory
+        Dim sett As New DtoSelectionItems
+
+
+
+        'Пробуем подключиться к Pervasive Server
+        session = New DtoSession
+        databas = New DtoDatabase
+
+        result = session.Connect("localhost")
+
+        Console.WriteLine(result.ToString)
+        Console.WriteLine(session.Connected)
+        If Not result = dtoResult.Dto_Success Then
+            MsgBox("Connect pervasive " & session.Error(result))
             Exit Sub
         End If
 
@@ -593,8 +801,9 @@ Public Class frmInstall
             sett.Add(dtoSetting.AllPossibleSelections.GetByID(3))
             dtoSetting.Value = sett
             Logining("Настройка первасива Create File Version=7.х выполнена", "Успех")
+
         Catch ex As Exception
-            MsgBox(ex.Message)
+            MsgBox("Pervasive settnigs " & ex.Message)
             Logining("Не удалось установить настройку первасива Create File Version=7.х", "Нетого")
         End Try
 
@@ -628,7 +837,7 @@ Public Class frmInstall
                 Exit Sub
             End If
         Else
-                Logining("База CashOffline подключена ", "Успех")
+            Logining("База CashOffline подключена ", "Успех")
             session.Disconnect()
         End If
 
@@ -671,7 +880,7 @@ Public Class frmInstall
         Try
             doCmd = New PsqlCommand("UPDATE SO_SHOPCASH Set ctCode='" & cashDeskNum & "' , ctName='" & cashDescName & "', cashCode='" & cashDeskNum & "', COMMport='" & cashDeskPort & "', COMMsetting='" & cashDeskSettings & "'", Conn)
             doCmd.ExecuteNonQuery()
-            Logining("Параметры касса оюновленны успешно", "Успех")
+            Logining("Параметры кассы обновленны успешно", "Успех")
         Catch ex As Exception
             Logining("Ошибка записи параметров кассы в БД", "Нетого")
             Logining(ex.Message, "")
@@ -733,5 +942,11 @@ Public Class frmInstall
 
     Private Sub TextBox3_TextChanged(sender As Object, e As EventArgs) Handles TextBox3.TextChanged
         cashDeskSettings = TextBox3.Text
+    End Sub
+
+    Private Sub BackgroundWorker2_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs)
+
+
+
     End Sub
 End Class
