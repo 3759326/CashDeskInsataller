@@ -1,0 +1,31 @@
+#
+#  Example IDSHOSTS file.
+#
+#  IDSHOSTS is a text file that resembles the standard Windows LMHOSTS 
+#  specifications.  The file must reside the %SystemRoot%\system32 
+#  directory on Windows NT, or %SystemRoot%\system on Windows 95 and 98.
+#
+#  IDSHOSTS is formated as the following:
+#
+#  1. All comments must be preceded by #
+#  2. The server or drive being mapped has to be the first entry on 
+#     a new line.
+#  3. One or more spaces must separate the drive or server being 
+#     mapped from the IDS server name.
+#  4. If the path contains spaces it must be enclosed in double 
+#     spaces.
+#  5. An optional IDS Database Set name may be specified after the 
+#     IDS server name, separated by one or more spaces.  The IDS
+#     Database Set name is only used by the Btrieve Win32 Requester.
+#  6. Server mappings have to start with two back slashes.
+#
+#
+# j:                   www.pervasive.com       # Drive mapping
+# k:\myData\           10.1.1.1                # IP notation can be used
+# \\dataServer\public  www.pervasive.com       # Server names need \\
+# "m:\my data\"        www.yourserver.com      # If there are spaces in 
+#                                              # path the whole path must
+#                                              # be enclosed by ""
+# l:\accounting        AcctServer     AcctDB   # Example with IDS 
+#                                              # Database Set name
+

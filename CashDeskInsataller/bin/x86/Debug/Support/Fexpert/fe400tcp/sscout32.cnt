@@ -1,0 +1,16 @@
+:Base SSCOUT32.HLP
+:Title SmartScout
+1 Getting Started
+2 SmartScout Overview=SmartScout_Overview>main
+1 Using SmartScout
+2 Workstation Page Overview=Workstation_Page_Overview>main
+2 Components Page Overview=Components_Page_Overview>main
+2 System Tests Page Overview=System_Tests_Page_Overview>main
+1 Networking Topics
+2 TCP/IP=TCP_IP>main
+2 IPX/SPX=IPX_SPX>main
+2 Communications Problems=Communications_Problems>main
+2 Required Files for Network Communications=Required_Files_for_Network_Communications>main
+1 How to Get Additional Help
+2 Status Codes Help File=1statcod_rtf_11715@code_msg.hlp>main
+2 How to Reach Customer Support=Customer_Support>main

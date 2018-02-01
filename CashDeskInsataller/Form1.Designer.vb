@@ -59,6 +59,7 @@ Partial Class frmStart
         Me.Button3.TabIndex = 2
         Me.Button3.Text = "Разворачиванние архива кассы"
         Me.Button3.UseVisualStyleBackColor = True
+        Me.Button3.Visible = False
         '
         'GroupBox1
         '

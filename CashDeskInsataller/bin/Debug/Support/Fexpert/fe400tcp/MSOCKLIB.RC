@@ -1,0 +1,304 @@
+/*
+ * Copyright (C) JSB Computer Systems Ltd, 1991.
+ *
+ * This Module contains Proprietary Information of
+ * JSB Computer Systems Ltd, and should be treated
+ * as Confidential.
+ */
+
+
+/*
+ *
+ * This is the resource file for the DOS Virtual Socket Library.
+ *
+ *
+ *  History & Modifications
+ *  =======================
+ *
+ *  Version 3-0-11
+ *  --------------
+ *  05/25/95  Akshay Soin   AVS001  Added the string resources for Version
+ *                                  matching.
+ */
+
+#include <windows.h>
+#include "../include/socket.h"
+#include "../include/msocklib.h"
+#include "../include/title.h"
+
+STRINGTABLE LOADONCALL
+{
+    IDS_VSLVERSION,         "3.0.11"           /* 257 (actually 0x0101) */
+
+    IDS_ENUMVSLNETS,        "EnumVSLNets(). VSL version: %s" /* 15 */
+    IDS_ENUMVSLNETS1,       "  GlobalAlloc of <%d> bytes"    /* 16 */
+    IDS_ENUMVSLNETS2,       "  Retd. NetKey:<%s>"            /* 17 */
+    IDS_ENUMVSLNETS3,       "  Retd. NetDescription:<%s>"    /* 18 */
+    IDS_ENUMVSLNETSEXIT,    "EnumVSLNets():Retd.<%d>"        /* 19 */
+
+    IDS_INITSL,             "InitSocketLibrary(). VSL version: %s" /* 20 */
+    IDS_INITSL1,            "  NetKey:<%s>"                        /* 21 */
+    IDS_INITSL2,            "  NetBeingServiced:<%s>"              /* 22 */
+    IDS_INITSLEXIT,         "InitSocketLibrary():Retd.<%d>"        /* 29 */
+
+    IDS_DEINITSL,           "DeinitSocketLibrary()"                /* 30 */
+    IDS_DEINITSLEXIT,       "DeinitSocketLibrary():Retd.<%d>"      /* 39 */
+
+    IDS_GETNETDATA,         "GetNetData()"              /* 40 */
+    IDS_GETNETDATA1,        "  Searching for Key:<%s>"  /* 41 */
+    IDS_GETNETDATA2,        "  Found:<%s>"              /* 42 */
+    IDS_GETNETDATA3,        "    Key:<%s>"              /* 43 */
+    IDS_GETNETDATA4,        "    Desc:<%s>"             /* 44 */
+    IDS_GETNETDATA5,        "    Module:<%s>"           /* 45 */
+    IDS_GETNETDATA6,        "    Private:<%s>"          /* 46 */
+    IDS_GETNETDATA7,        "    Type:<%d>"             /* 47 */
+    IDS_GETNETDATAEXIT,     "GetNetData():Retd.<%d>"    /* 49 */
+
+    IDS_INITDLL,            "InitDLLNetModule(). DLL Module:<%s>"      /* 50 */
+    IDS_INITDLL1,           "  Can't LoadLibrary(). Retd<%d>"          /* 51 */
+    IDS_INITDLL2,           "  Can't find _dllInitTransport() in <%s>" /* 52 */
+    IDS_INITDLL3,           "  Calling _dllInitTransport() in <%s>"    /* 53 */
+    IDS_INITDLL4,           "  Getting DLL proc addresses"             /* 54 */
+    IDS_INITDLL5,           "  Can't get proc address for <%s>"        /* 55 */
+    IDS_INITDLL6,           "  Sock func id.(%d) > MAX_SOCKET_ROUTINES!"/*56 */
+    IDS_INITDLLEXIT,        "InitDLLNetModule():Retd.<%d>"             /* 59 */
+
+    IDS_DEINITDLL,          "DeinitDLLNetModule()"               /* 60 */
+    IDS_DEINITDLL1,         "  Calling _dllDeinitTransport()"    /* 61 */
+    IDS_DEINITDLL2,         "  Can't find _dllDeinitTransport()" /* 62 */
+    IDS_DEINITDLLEXIT,      "DeinitDLLNetModule():Retd.<%d>"     /* 69 */
+
+    IDS_GHBN,               "gethostbyname(). Name:<%s>"                /*70*/
+    IDS_GHBN1,              "  handle:<%d>"                             /*71*/
+    IDS_GHBN2,              "  (rtn code=%d) <-----------------------!!"/*72*/
+    IDS_GHBNEXIT,           "gethostbyname():Retd.<%d>"                 /*79*/
+
+    IDS_GHBA,               "gethostbyaddr(). addr:<%s>"  /* 310 */
+    IDS_GHBA1,              "  handle:<%d>"               /* 311 */
+    IDS_GHBA2,              "  (rtn code=%d) <------------------------!!"/*312*/
+    IDS_GHBAEXIT,           "gethostbyaddr():Retd.<%d>"   /* 313 */
+
+    IDS_ACCEPT,             "accept(). Socket:<%d>" /* 80 */
+    IDS_ACCEPTEXIT,         "accept():Retd.<%d>"    /* 89 */
+
+    IDS_BIND,               "bind(). Socket:<%d>"   /* 90 */
+    IDS_BINDEXIT,           "bind():Retd.<%d>"      /* 99 */
+
+    IDS_CONNECT,            "connect(). Socket:<%d>" /* 100 */
+    IDS_CONNECTEXIT,        "connect():Retd.<%d>"    /* 109 */
+
+    IDS_FCNTL,              "fcntl(). Socket:<%d>"  /* 190 */
+    IDS_FCNTL1,              "  cmd:<%d>"           /* 191 */
+    IDS_FCNTL2,              "  arg:<%d>"           /* 192 */
+    IDS_FCNTLEXIT,           "fcntl():Retd.<%d>"    /* 199 */
+
+    IDS_GETPEERNAME,         "getpeername(). Socket:<%d>" /* 250 */
+    IDS_GETPEERNAMEEXIT,     "getpeername():Retd.<%d>"    /* 259 */
+
+    IDS_GETSOCKNAME,         "getsockname(). Socket:<%d>"  /* 260 */
+    IDS_GETSOCKNAMEEXIT,     "getsockname():Retd.<%d>"     /* 269 */
+
+    IDS_GETSOCKOPT,          "getsockopt(). Socket:<%d>"   /* 270 */
+    IDS_GETSOCKOPTEXIT,      "getsockopt():Retd.<%d>"      /* 279 */
+
+    IDS_LISTEN,             "listen(). Socket:<%d>"  /* 110 */
+    IDS_LISTEN1,            "  Backlog:<%d>"         /* 111 */
+    IDS_LISTENEXIT,         "listen():Retd.<%d>"     /* 119 */
+
+    IDS_RECV,               "recv(). Socket:<%d>"   /* 120 */
+    IDS_RECV1,              "  Length request:<%d>" /* 121 */
+    IDS_RECVEXIT,           "recv():Retd.<%d>"      /* 129 */
+
+    IDS_RECVFROM,           "recvfrom(). Socket:<%d>" /* 210 */
+    IDS_RECVFROM1,          "  Length request:<%d>"   /* 211 */
+    IDS_RECVFROMEXIT,       "recvfrom():Retd.<%d>"    /* 219 */
+
+    IDS_RECVMSG,            "recvmsg(). Socket:<%d>"  /* 230 */
+    IDS_RECVMSGEXIT,        "recvmsg():Retd.<%d>"     /* 239 */
+
+    IDS_SELECT,             "select(). nfds:<%d>"  /* 130 */
+    IDS_SELECT1,            "    read fds:<%s>"    /* 131 */
+    IDS_SELECT2,            "    write fds:<%s>"   /* 132 */
+    IDS_SELECT3,            "    except fds:<%s>"  /* 133 */
+    IDS_SELECT4,            "  fds on entry:"      /* 134 */
+    IDS_SELECT5,            "  fds on exit:"       /* 135 */
+    IDS_SELECT6,            "  Changed blocking select to non-blocking" /*136*/
+    IDS_SELECT7,            "  timeout secs <%s>"  /* 137 */
+    IDS_SELECT8,            "  timeout usecs <%s>" /* 138 */
+    IDS_SELECTMIN,          "    select()...repeated request/result on read fds:<%s>"/*141*/
+    IDS_SELECTEXIT,         "select():Retd.<%d>"    /* 149 */
+
+    IDS_SEND,               "send(). Socket:<%d>"  /* 150 */
+    IDS_SEND1,              "  Length:<%d>"        /* 151 */
+    IDS_SENDEXIT,           "send():Retd.<%d>"     /* 159 */
+
+    IDS_SENDTO,             "sendto(). Socket:<%d>"  /* 220 */
+    IDS_SENDTO1,            "  Length:<%d>"          /* 221 */
+    IDS_SENDTOEXIT,         "sendto():Retd.<%d>"     /* 229 */
+
+    IDS_SENDMSG,            "sendmsg(). Socket:<%d>"  /* 240 */
+    IDS_SENDMSGEXIT,        "sendmsg():Retd.<%d>"     /* 249 */
+
+    IDS_SETSOCKOPT,         "setsockopt(). Socket:<%d>"  /* 200 */
+    IDS_SETSOCKOPT1,        "  optname:<%d>"             /* 201 */
+    IDS_SETSOCKOPT2,        "  optlen:<%d>"              /* 202 */
+    IDS_SETSOCKOPT3,        "  optval(1st byte):<%d>"    /* 203 */
+    IDS_SETSOCKOPTEXIT,     "setsockopt():Retd.<%d>"     /* 209 */
+
+    IDS_SOCKET,             "socket(). Type:<%d>"  /* 160 */
+    IDS_SOCKETEXIT,         "socket():Retd.<%d>"   /* 169 */
+
+    IDS_CLOSESOCKET,        "closesocket(). Socket:<%d>" /* 170 */
+    IDS_CLOSESOCKETEXIT,    "closesocket():Retd.<%d>"    /* 179 */
+
+    IDS_SHUTDOWN,           "shutdown(). Socket:<%d>" /* 180 */
+    IDS_SHUTDOWN1,          "  How:<%d>"              /* 181 */
+    IDS_SHUTDOWNEXIT,       "shutdown():Retd.<%d>"    /* 189 */
+
+#define IDS_CALLTSRINIT           303
+#define IDS_CALLTSREXIT           304
+    IDS_PROTCHK,            "Protect mode check()."          /* 280 */
+    IDS_PROTCHKEXIT,        "Protect mode check():Retd.<%d>" /* 281 */
+    IDS_INITTSR,            "InitTSRNetModule(). TSR Module:<%s>" /* 282 */
+    IDS_INITTSR1,           "  Protected mode:<%d>"               /* 283 */
+    IDS_INITTSREXIT,        "InitTSRNetModule():Retd.<%d>"        /* 286 */
+    IDS_DEINITTSR,          "DeinitTSRNetModule()"                /* 287 */
+    IDS_DEINITTSREXIT,      "DeinitTSRNetModule():Retd.<%d>"      /* 288 */
+    IDS_EIVINIT,            "Getting Int Vec. Private data:<%s>"  /* 289 */
+    IDS_EIVINIT1,           "  Established Vector:<%s>"           /* 290 */
+    IDS_EIVEXIT,            "Getting Int Vec. Retd:<%d>"          /* 291 */
+    IDS_IIVINIT,            "IsIntVec. Vector:<%s>"               /* 292 */
+    IDS_IIVEXIT,            "IsIntVec. Retd:<%d>"                 /* 293 */
+    IDS_CHKSIGINIT,         "CheckSignature(). Sig:<%s>"          /* 294 */
+    IDS_CHKSIGEXIT,         "CheckSignature(). Retd:<%d>"         /* 295 */
+    IDS_CHKSIG2FINIT,       "CheckInt2FSignature(). Sig:<%s>"     /* 305 */
+    IDS_CHKSIG2F1           "MPX Id:<%s>"                         /* 306 */
+    IDS_CHKSIG2F2           "MPXer retd.:<%s>"                    /* 307 */
+    IDS_CHKSIG2FEXIT,       "CheckInt2FSignature(). Rtd.Vector:<%s>"/* 309 */
+    IDS_GSMINIT,            "GetSharedMem()."                     /* 296 */
+    IDS_GSM1,               "  Size:<%d>"                         /* 297 */
+    IDS_GSM2,               "  Segment:<%s>"                      /* 298 */
+    IDS_GSM3,               "  Offset:<%s>"                       /* 299 */
+    IDS_GSM4,               "  Attempting access..."              /* 300 */
+    IDS_GSM5,               "  ...done it!"                       /* 301 */
+    IDS_GSMEXIT,            "GetSharedMem(). Retd:<%d>"           /* 302 */
+    IDS_CALLTSRINIT,        "CallTSRNetModule(). FuncCode:<%d>"
+    IDS_CALLTSREXIT,        "CallTSRNetModule() return."
+
+    IDS_WEP,                "VSL WEP()"                                  /*1*/
+    IDS_WEPEXIT,            "VSL WEP() exit"                             /*10*/
+    IDS_MEM_ALLOC           "Memory Allocation failure"                  /*7*/
+    IDS_OTHER_INT,          "Undefined error:<%d>"                       /*999*/
+    IDS_PERRNO,             "  (errno=%d) <--------------------------!!" /*3*/
+    IDS_IP1,                "  namelen:<%d>"                             /*4*/
+    IDS_IP2,                "  port:<%u>"                                /*5*/
+    IDS_IP3,                "  IP Addr:<%s>"                             /*6*/
+    IDS_TSR_DIAG1,          "**TSR msg:<%s> <-------------!!!!"          /*8*/
+    IDS_TSR_DIAG2,          "**TSR msg:Can't o/p message <----------!!!!"/*9*/
+    IDS_DATATRACE,          "Data:<%s>"                                  /*2*/
+
+
+
+    IDS_GPBN,               "getprotobyname(). name:<%s>"              /*314*/
+    IDS_GPBNEXIT,           "getprotobyname():Retd.<%d>"               /*315*/
+    IDS_GPBNUM,             "getprotobynumber(). number:<%d>"          /*316*/
+    IDS_GPBNUMEXIT,         "getprotobynumber():Retd.<%s>"             /*317*/
+
+    IDS_GSBN,               "getservbyname(). name:<%s>"               /*318*/
+    IDS_GSBNEXIT,           "getservbyname():Retd. port no.<%d>"       /*319*/
+    IDS_GSBPORT,            "getservbyport(). number:<%d>"             /*320*/
+    IDS_GSBPORTEXIT,        "getservbyport():Retd. service<%s>"        /*321*/
+
+    IDS_GHN,                "Calling gethostname(). len:<%d>"          /*322*/
+    IDS_GHN1,               "  name:<%s>"                              /*323*/
+    IDS_GHNEXIT,            "gethostname():Retd.<%d>"                  /*324*/
+
+    IDS_FAMILY,             "  Family:<%u>"                            /*11*/
+
+    IDS_TRACE,              "Tracing to: "                             /*400*/
+    IDS_WARN,               "An error has occured in the networking software, check log file: " /*401*/
+
+    IDS_EXITVER,            "TSR/DLL version incorrect"                  /*402*/
+
+    IDS_PROTOCOL_UNSPEC,    "AF_UNSPEC"                               /*800*/
+    IDS_PROTOCOL_INET,      "AF_INET"                                 /*802*/
+    IDS_PROTOCOL_IPX,       "AF_IPX"                                  /*806*/
+    IDS_PROTOCOL_DECNET,    "AF_DECnet"                               /*812*/
+    IDS_PROTOCOL_NEBEUI,    "AF_NETBIOS"                              /*817*/
+
+    IDS_PERRNAME            "  (error=%s) <--------------------------------!!" /*410*/
+
+    IDS_EUNKNOWN,           "EUNKNOWN"                       /* 2265 */
+    IDS_EWOULDBLOCK,        "EWOULDBLOCK"                    /* 2045 */
+    IDS_EINPROGRESS,        "EINPROGRESS"                    /* 2046 */
+    IDS_EALREADY,           "EALREADY"                       /* 2047 */
+    IDS_ENOTSOCK,           "ENOTSOCK"                       /* 2048 */
+    IDS_EDESTADDRREQ,       "EDESTADDRREQ"                   /* 2049 */
+    IDS_EMSGSIZE,           "EMSGSIZE"                       /* 2050 */
+    IDS_EPROTOTYPE,         "EPROTOTYPE"                     /* 2051 */
+    IDS_ENOPROTOOPT,        "ENOPROTOOPT"                    /* 2052 */
+    IDS_EPROTONOSUPPORT,    "EPROTONOSUPPORT"                /* 2053 */
+    IDS_ESOCKTNOSUPPORT,    "ESOCKTNOSUPPORT"                /* 2054 */
+    IDS_EOPNOTSUPP,         "EOPNOTSUPP"                     /* 2055 */
+    IDS_EPFNOSUPPORT,       "EPFNOSUPPORT"                   /* 2056 */
+    IDS_EAFNOSUPPORT,       "EAFNOSUPPORT"                   /* 2057 */
+    IDS_EADDRINUSE,         "EADDRINUSE"                     /* 2058 */
+    IDS_EADDRNOTAVAIL,      "EADDRNOTAVAIL"                  /* 2059 */
+    IDS_ENETDOWN,           "ENETDOWN"                       /* 2060 */
+    IDS_ENETUNREACH,        "ENETUNREACH"                    /* 2061 */
+    IDS_ENETRESET,          "ENETRESET"                      /* 2062 */
+    IDS_ECONNABORTED,       "ECONNABORTED"                   /* 2063 */
+    IDS_ECONNRESET,         "ECONNRESET"                     /* 2064 */
+    IDS_ENOBUFS,            "ENOBUFS"                        /* 2065 */
+    IDS_EISCONN,            "EISCONN"                        /* 2066 */
+    IDS_ENOTCONN,           "ENOTCONN"                       /* 2067 */
+    IDS_ESHUTDOWN,          "ESHUTDOWN"                      /* 2068 */
+    IDS_ETOOMANYREFS,       "ETOOMANYREFS"                   /* 2069 */
+    IDS_ETIMEDOUT,          "ETIMEDOUT"                      /* 2070 */
+    IDS_ECONNREFUSED,       "ECONNREFUSED"                   /* 2071 */
+    IDS_ELOOP,              "ELOOP"                          /* 2072 */
+    IDS_ENAMETOOLONG,       "ENAMETOOLONG"                   /* 2073 */
+    IDS_EHOSTDOWN,          "EHOSTDOWN"                      /* 2074 */
+    IDS_EHOSTUNREACH,       "EHOSTUNREACH"                   /* 2075 */
+    IDS_ENOTEMPTY,          "ENOTEMPTY"                      /* 2076 */
+    IDS_EPROCLIM,           "EPROCLIM"                       /* 2077 */
+    IDS_EUSERS,             "EUSERS"                         /* 2078 */
+    IDS_EDQUOT,             "EDQUOT"                         /* 2079 */
+    IDS_ESTALE,             "ESTALE"                         /* 2080 */
+    IDS_EREMOTE,            "EREMOTE"                        /* 2081 */
+    IDS_ENOSTR,             "ENOSTR"                         /* 2082 */
+    IDS_ETIME,              "ETIME"                          /* 2083 */
+    IDS_ENOSR,              "ENOSR"                          /* 2084 */
+    IDS_ENOMSG,             "ENOMSG"                         /* 2085 */
+    IDS_EBADMSG,            "EBADMSG"                        /* 2086 */
+    IDS_EIDRM,              "EIDRM"                          /* 2087 */
+    IDS_EDEADLK,            "EDEADLK"                        /* 2088 */
+    IDS_ENOLCK,             "ENOLCK"                         /* 2089 */
+    IDS_EBADVERSION,        "EBADVERSION"                    /* 2090 */
+    IDS_EINVALSOCK,         "EINVALSOCK"                     /* 2091 */
+    IDS_ETOOMANYSOCK,       "ETOOMANYSOCK"                   /* 2092 */
+    IDS_EFAULTSOCK,         "EFAULTSOCK"                     /* 2093 */
+    IDS_ERESET,             "ERESET"                         /* 2094 */
+    IDS_ENOTUNIQUE,         "ENOTUNIQUE"                     /* 2095 */
+    IDS_ENOGATEADDR,        "ENOGATEADDR"                    /* 2096 */
+    IDS_ESENDERR,           "ESENDERR"                       /* 2097 */
+    IDS_ENOETHDRVR,         "ENOETHDRVR"                     /* 2098 */
+    IDS_EWRITPENDING,       "EWRITPENDING"                   /* 2099 */
+    IDS_EREADPENDING,       "EREADPENDING"                   /* 2100 */
+    IDS_ENOTCPIP,           "ENOTCPIP"                       /* 2101 */
+    IDS_EDRVBUSY,           "EDRVBUSY"                       /* 2102 */
+
+    IDS_VSL_NET_MODULE_NOT_LOADED,    "VSL_NET_MODULE_NOT_LOADED"    /* 2009 */
+    IDS_VSL_NET_TRANSPORT_NOT_LOADED, "VSL_NET_TRANSPORT_NOT_LOADED" /* 2008 */
+    IDS_VSL_LIBRARY_NOT_INITIALISED,  "VSL_LIBRARY_NOT_INITIALISED"  /* 2007 */
+    IDS_VSL_ALREADY_INITIALISED,      "VSL_ALREADY_INITIALISED"      /* 2006 */
+    IDS_VSL_UNKNOWN_NETKEY,           "VSL_UNKNOWN_NETKEY"           /* 2005 */
+    IDS_VSL_UNSUPPORTED_NET,          "VSL_UNSUPPORTED_NET"          /* 2004 */
+    IDS_VSL_UNKNOWN_NET_INTERFACE,    "VSL_UNKNOWN_NET_INTERFACE"    /* 2003 */
+    IDS_VSL_UNKNOWN_NET_MODULE,       "VSL_UNKNOWN_NET_MODULE"       /* 2002 */
+    IDS_VSL_UNSUPPORTED_COMMAND,      "VSL_UNSUPPORTED_COMMAND"      /* 2001 */
+
+    IDS_BADVER,          "  VSL Version Mismatch: File:<%s>" /* 340 */
+    IDS_BADVER1,         "    File is version <%s>"          /* 341 */
+    IDS_BADVER2,         "    Previously logged as <%s>"     /* 342 */
+}

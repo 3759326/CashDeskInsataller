@@ -1,0 +1,84 @@
+:Base PCC.HLP
+:Title Pervasive.SQL 2000 Control Center
+:Index SQL Data Manager=Sqldm.hlp
+:Index Pervasive Configuration Utility=Pvconfig.hlp
+:Index Pervasive Control Center=Pcc.hlp
+:Index Btrieve Maintenance Utility=W32maint.hlp
+:Index Pervasive Monitor Utility=W3monv75.hlp
+:Index Pervasive Rebuild Utility=W32rbld.hlp
+:Index User Count Administrator=W32ucadm.hlp
+:Index SmartScout=Sscout32.hlp
+:Index InstallScout=Inssct32.hlp
+:Link Sqldm.hlp
+:Link pvconfig.hlp
+:Link pcc.hlp
+:Link W3monv75.hlp
+:Link W32rbld.hlp
+:Link W32sset.hlp
+:Link W32maint.hlp
+:Link Inssct32.hlp
+:Link Sscout32.hlp
+:Link Pervbcp.hlp
+1 Pervasive.SQL 2000 Control Center
+2 Pervasive Control Center=Pervasive_Control_Center>main
+2 Pervasive Software Configuration Utility
+3 Pervasive Software Configuration Utility=Pervasive_Configuration_Utility@PVCONFIG.HLP>main
+2 SQL Data Manager
+3 SQL Data Manager=SQL_Data_Manager@SQLDM.HLP
+2 InstallScout
+3 InstallScout Contents=InstallScout_Contents@INSSCT32.HLP>main
+2 Btrieve Maintenance Utility
+3 About Btrieve Maintenance Utility=IDM_MENU_ABOUT_HELP@W32MAINT.HLP>main
+3 Btrieve Maintenance Utility=IDH_CONTENTS@W32MAINT.HLP>main
+3 Options
+4 File Information Editor=IDM_EDITOR_DLG_HELP@W32MAINT.HLP>main
+4 ACS Information=IDM_ACSINFO_DLG_HELP@W32MAINT.HLP>main
+4 Set - Clear Owner=IDM_SET_CLEAR_DLG_HELP@W32MAINT.HLP>main
+4 Create Stat Report=IDM_STAT_REPORT_DLG_HELP@W32MAINT.HLP>main
+3 Index
+4 Create Index=IDM_CREATE_INDEX_DLG_HELP@W32MAINT.HLP>main
+4 Drop Index=IDM_DROP_INDEX_DLG_HELP@W32MAINT.HLP>main
+3 Data
+4 Load Data=IDM_LOAD_DLG_HELP@W32MAINT.HLP>main
+4 Copy Data=IDM_COPY_DLG_HELP@W32MAINT.HLP>main
+4 Save Data=IDM_SAVE_DLG_HELP@W32MAINT.HLP>main
+4 Roll Forward=IDM_ROLLFWD_DLG_HELP@W32MAINT.HLP>main
+3 Help
+4 Getting Help=IDM_GETTING_HELP@W32MAINT.HLP>main
+4 Help on Help=IDM_HELP_ON_HELP@W32MAINT.HLP>main
+2 Pervasive Software Monitor Utility
+; next level + 1
+2 Pervasive Software Monitor Utility=Pervasive_Software_Monitor@W3MONV75.HLP>main
+3 Options
+4 Options=Options@W3MONV75.HLP>main
+3 MicroKernel
+4 MicroKernel=MicroKernel@W3MONV75.HLP>main
+3 Window
+4 Window=Window@W3MONV75.HLP>main
+3 SQL
+4 SQL=SQL@W3MONV75.HLP>main
+3 Help
+4 About=MON_ABOUT_DLG_HELP_CNTXT@W3MONV75.HLP>main
+2 Pervasive Software Rebuild Utility
+; next level + 1
+2 Introduction=Main_Window@W32RBLD.HLP>main
+3 Options
+4 Select Files=Select_Files_Dialog@W32RBLD.HLP>main
+4 Settings=Settings_Dialog@W32RBLD.HLP>main
+4 How To...
+5 Select Files=Selecting_Files@W32RBLD.HLP>second
+5 Delete Files=Deleting_Files@W32RBLD.HLP>second
+3 Run
+; next level + 1
+3 Start Rebuild=Start_Rebuild_Dialog@W32RBLD.HLP>main
+4 View Status File=View_Status_File_Dialog@W32RBLD.HLP>main
+3 Help
+4 About=About_Dialog@W32RBLD.HLP>main
+2 SmartScout
+; next level + 1
+2 Workstation Page Overview=Workstation_Page_Overview@SSCOUT32.HLP>main
+3 Components Page Overview=Components_Page_Overview@SSCOUT32.HLP>main
+3 System Tests Page Overview=System_Tests_Page_Overview@SSCOUT32.HLP>main
+2 User Count Administrator
+3 User Count Administrator=User_Count_Administrator@W32UCADM.HLP>main
+3 Remove License Dialog=Remove_License_Dialog@W32UCADM.HLP>main

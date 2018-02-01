@@ -1,0 +1,23 @@
+[general]
+script=o:\fexpert\
+Config=o:\fexpert\fe400\project\garantia\garant_n.ini
+ConfigIndex=1
+
+[config]
+Рапид=o:\fexpert\fe400\project\garantia\garant_n.ini
+
+[Preferences]
+Default=1 12632256 8421440 Courier New -11 1 1 1
+[Recent File List]
+File1=O:\FExpert\FE400\SCRIPT\FE.SC
+File2=
+File3=
+File4=
+File5=
+File6=
+File7=
+File8=
+[Toolbars]
+tb1770=1,300,100,0,15,1,1,306,-2
+tb000E=0,200,100,0,15,1,1,32767,-1
+tb0101=1,100,100,0,15,1,1,-2,-2

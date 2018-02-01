@@ -2,6 +2,7 @@
 Imports System.IO
 Imports DTOLib
 Imports Pervasive.Data.SqlClient
+Imports System.ComponentModel
 
 
 
@@ -24,16 +25,16 @@ Public Class frmInstall
     Dim destPath As String
     Dim destPathSlash As String
     Dim paramINI As New Full_INI_Class
-    Dim iniSections
+    Dim iniSections() As Object
     Dim iniPath As String = Application.StartupPath & "\settings.ini"
-    Dim iniParameters()
+    Dim iniParameters() As Object
     Dim installDir As String = Application.StartupPath & "\Support\"
     Dim windir As String = Environment.GetEnvironmentVariable("WINDIR")
     Dim systemdir As String = Environment.GetFolderPath(Environment.SpecialFolder.System)
     Dim syswow64dir As String = Environment.GetEnvironmentVariable("WINDIR") & "\SysWOW64"
     Dim startupdir As String = Environment.GetFolderPath(Environment.SpecialFolder.Startup)
     Dim sysfontdir As String = Environment.GetEnvironmentVariable("WINDIR") & "\Fonts"
-    Dim privatSettinsPath As String = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\Bkc Corporation\JavaPosCATSevice\fourinone.properties"
+    Dim privatSettinsPath As String
     Dim splitPath() As String
     Dim dirFESOL As String
     Dim logFile As String
@@ -62,7 +63,17 @@ Public Class frmInstall
             destPathSlash = destPath
 
         End If
+        If Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\SysWOW64") Then
 
+            privatSettinsPath = Environment.GetEnvironmentVariable("ProgramW6432") & "\Bkc Corporation\JavaPosCATSevice\fourinone.properties"
+        Else
+            privatSettinsPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\Bkc Corporation\JavaPosCATSevice\fourinone.properties"
+        End If
+        Try
+            Environment.SetEnvironmentVariable("SEE_MASK_NOZONECHECKS", "1")
+        Catch ex As Exception
+
+        End Try
     End Sub
     Private Sub LogFileInit()
         logFile = Application.StartupPath & "\Log" & "\CashDesk" & cashDeskNum & "_install_" & Now.ToShortDateString & ".log"
@@ -110,6 +121,8 @@ Public Class frmInstall
     End Sub
 
     Private Sub frmInstall_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        Me.Dispose()
+
         frmStart.Show()
 
     End Sub
@@ -247,6 +260,7 @@ Public Class frmInstall
         Dim WOfflinePath As String
         Dim WOffExpPath As String
 
+        Environment.SetEnvironmentVariable("SEE_MASK_NOZONECHECKS", "0")
         ProgressBar1.Value = 0
         If destPath.LastIndexOf("\") <> Len(destPath) - 1 Then
 
@@ -281,12 +295,13 @@ Public Class frmInstall
 
         LogFileInit()
 
-        Logining("---------- Начнемс...---------")
+        Logining("Начнемс...")
         Logining("------------------------------")
         Button3.Enabled = False
 
 
         'Начинаем расспаковку архива
+        BackgroundWorker1.WorkerSupportsCancellation = True
         BackgroundWorker1.WorkerReportsProgress = True
         BackgroundWorker1.RunWorkerAsync()
 
@@ -303,7 +318,6 @@ Public Class frmInstall
         'Копмруем и регистрим DLLки
         '-------------------------------------------------
         DllReg()
-
         progress(15)
 
         'Копируем необходимые файлы
@@ -333,7 +347,7 @@ Public Class frmInstall
         cashDescIniClear(destPathSlash & WOffExpPath, "Cashdesk_Export")
 
         'Меняем порт терминала привата
-        inLineReplace(privatSettinsPath, "ComPort", terminlPort)
+        inLineReplace(privatSettinsPath, "ComPort", "ComPort       = COM" & terminlPort)
         progress(5)
         'Прописываем номер кассы в Финэксперте ( в базе), делаем настройку Pervasive
         'SrvControl("Pervasive.SQL (transactional)", "Restart")
@@ -350,13 +364,15 @@ Public Class frmInstall
         Logining("---------------------------------------------")
         Logining("---------   ФСЕ!   ---------")
         Logining("---------------------------------------------")
+        Logining("P.S. Не забываем провериться и перезагрузить ПК")
+        Logining("---------------------------------------------")
         ProgressBar1.Value = 100
         Label1.Text = "100 %"
         Console.WriteLine("Finish")
         logWriter.Close()
         logWriter.Dispose()
         Button3.Enabled = True
-
+        Environment.SetEnvironmentVariable("SEE_MASK_NOZONECHECKS", "1")
     End Sub
     Private Sub install()
 
@@ -435,8 +451,8 @@ Public Class frmInstall
                 'MsgBox((stdPath(iniParametr).firstPart & stdPath(iniParametr).secondPart))
                 'MsgBox(stdPath(iniParametr).secondPart)
                 Logining("Файл " & fname & " скопирован в " & fdest, "Успех")
-            Catch ex As IOException
-                MsgBox(fsources & vbCrLf & fdest & fname & vbCrLf & ex.Message)
+            Catch ex As Exception
+                ' MsgBox(fsources & vbCrLf & fdest & fname & vbCrLf & ex.Message)
                 Logining("Ошибка копирования " & fname & " в " & fdest, "Нетого")
             End Try
 
@@ -502,7 +518,7 @@ Public Class frmInstall
                 splitPath(0) = Environment.GetFolderPath(Environment.SpecialFolder.Programs)
             Case LCase("ProgramFile")
                 If Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\SysWOW64") Then
-                    splitPath(0) = "\Program Files"
+                    splitPath(0) = Environment.GetEnvironmentVariable("ProgramW6432")
                 Else
                     splitPath(0) = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
                 End If
@@ -609,7 +625,7 @@ Public Class frmInstall
     End Sub
 
     Private Sub TextBox1_GotFocus(sender As Object, e As EventArgs) Handles TextBox1.GotFocus
-        TextBox1.BackColor = Color.LightCoral
+
     End Sub
 
     Private Sub TextBox2_GotFocus(sender As Object, e As EventArgs) Handles TextBox2.GotFocus
@@ -635,9 +651,28 @@ Public Class frmInstall
         'SrvControl("Pervasive.SQL (transactional)", "Restart")
         'SrvControl("Pervasive.SQL (relational)", "Restart")
         'dbChange()
-        For Each de As DictionaryEntry In Environment.GetEnvironmentVariables()
-            Console.WriteLine("  {0} = {1}", de.Key, de.Value)
-        Next
+        'For Each de As DictionaryEntry In Environment.GetEnvironmentVariables()
+        '    Console.WriteLine("  {0} = {1}", de.Key, de.Value)
+        'Next
+        'If Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\SysWOW64") Then
+        '    MsgBox(Environment.GetEnvironmentVariable("ProgramW6432"))
+        'Else
+        '    MsgBox(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles))
+        'End If
+        'Environment.SetEnvironmentVariable("SEE_MASK_NOZONECHECKS", "1")
+
+        If BackgroundWorker1.IsBusy Then
+            BackgroundWorker1.CancelAsync()
+
+        End If
+
+
+
+
+        Me.Close()
+
+
+
 
 
 
@@ -921,16 +956,16 @@ Public Class frmInstall
                     Logining("Директория  " & dir & " пуста", "Успех")
                 End If
                 For Each clsFile In clearFiles
-                        Try
-                            File.Delete(clsFile)
+                    Try
+                        File.Delete(clsFile)
                         Logining("Директория  " & dir & " очищена", "Успех")
                     Catch ex As Exception
-                            Logining("Ошибка удаления файла " & clsFile, "Нетого")
-                        End Try
+                        Logining("Ошибка удаления файла " & clsFile, "Нетого")
+                    End Try
 
-                    Next
+                Next
 
-                End If
+            End If
 
         Next
 
@@ -948,5 +983,13 @@ Public Class frmInstall
 
 
 
+    End Sub
+
+    Private Sub frmInstall_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+
+    End Sub
+
+    Private Sub frmInstall_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        ' frmStart.Show()
     End Sub
 End Class

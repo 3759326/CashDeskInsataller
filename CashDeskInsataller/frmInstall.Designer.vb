@@ -145,7 +145,7 @@ Partial Class frmInstall
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(541, 24)
+        Me.Button1.Location = New System.Drawing.Point(541, 21)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(76, 28)
         Me.Button1.TabIndex = 1
@@ -182,6 +182,7 @@ Partial Class frmInstall
         Me.NumericUpDown2.Size = New System.Drawing.Size(53, 26)
         Me.NumericUpDown2.TabIndex = 0
         Me.NumericUpDown2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.NumericUpDown2.Value = New Decimal(New Integer() {4, 0, 0, 0})
         '
         'GroupBox4
         '
@@ -208,12 +209,12 @@ Partial Class frmInstall
         'Событие
         '
         Me.Событие.Text = "Событие"
-        Me.Событие.Width = 357
+        Me.Событие.Width = 500
         '
         'Статус
         '
         Me.Статус.Text = "Статус"
-        Me.Статус.Width = 120
+        Me.Статус.Width = 140
         '
         'Button2
         '
@@ -228,11 +229,11 @@ Partial Class frmInstall
         'Button3
         '
         Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Button3.Location = New System.Drawing.Point(460, 476)
+        Me.Button3.Location = New System.Drawing.Point(422, 475)
         Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(87, 29)
+        Me.Button3.Size = New System.Drawing.Size(125, 31)
         Me.Button3.TabIndex = 5
-        Me.Button3.Text = "Начать"
+        Me.Button3.Text = "Сделать хорошо"
         Me.Button3.UseVisualStyleBackColor = True
         '
         'ProgressBar1

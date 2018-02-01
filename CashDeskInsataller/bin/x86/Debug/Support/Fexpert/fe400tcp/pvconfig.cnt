@@ -1,0 +1,10 @@
+:Base PVCONFIG.HLP
+:Title Pervasive.SQL 2000 Configuration Utility
+:Index SQL Data Manager=Sqldm.hlp
+:Index Pervasive Configuration Utility=Pvconfig.hlp
+:Index Pervasive Control Center=Pcc.hlp
+:Link Sqldm.hlp
+:Link Pvconfig.hlp
+:Link pcc.hlp
+1 Pervasive.SQL 2000 Configuration Utility
+2 Pervasive.SQL 2000 Configuration Utility=Pervasive_Configuration_Utility>main

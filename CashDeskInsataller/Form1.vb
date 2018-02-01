@@ -9,7 +9,7 @@
     End Sub
 
     Private Sub Button1_MouseHover(sender As Object, e As EventArgs) Handles Button1.MouseHover
-        Label1.Text = "Создание мастер-образа (архива дирекотрии Fexpert) на полностью настроеной кассе"
+        Label1.Text = "Создание мастер-образа (архива дирекотрии Fexpert, fe.ini) на полностью настроеной кассе"
     End Sub
 
     Private Sub Button1_MouseLeave(sender As Object, e As EventArgs) Handles Button1.MouseLeave
@@ -17,7 +17,7 @@
     End Sub
 
     Private Sub Button2_MouseHover(sender As Object, e As EventArgs) Handles Button2.MouseHover
-        Label1.Text = "Установка всех требуемых программ и утилит, разворачивание мастер-образа кассы с очисткой директорий SHOP, ShopOffC, Log и настройкой ini файлов"
+        Label1.Text = "Установка всех требуемых программ и утилит, разворачивание мастер-образа кассы с очисткой директорий SHOP, ShopOffC, Log и настройкой ini файлов, настройкой БД FinExpert"
     End Sub
 
     Private Sub Button2_MouseLeave(sender As Object, e As EventArgs) Handles Button2.MouseLeave
